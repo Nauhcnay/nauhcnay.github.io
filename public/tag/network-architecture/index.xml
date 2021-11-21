@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Network architecture | Chuan Yan</title>
+    <link>https://nauhcnay.github.io/tag/network-architecture/</link>
+      <atom:link href="https://nauhcnay.github.io/tag/network-architecture/index.xml" rel="self" type="application/rss+xml" />
+    <description>Network architecture</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 21 Oct 2019 13:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://nauhcnay.github.io/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>Network architecture</title>
+      <link>https://nauhcnay.github.io/tag/network-architecture/</link>
+    </image>
+    
+    <item>
+      <title>Generative Adversarial Networks Based Error Concealment for Low Resolution Video</title>
+      <link>https://nauhcnay.github.io/publication/genvideoec/</link>
+      <pubDate>Mon, 21 Oct 2019 13:00:00 +0000</pubDate>
+      <guid>https://nauhcnay.github.io/publication/genvideoec/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

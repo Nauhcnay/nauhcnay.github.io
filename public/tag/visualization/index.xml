@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Visualization | Chuan Yan</title>
+    <link>https://nauhcnay.github.io/tag/visualization/</link>
+      <atom:link href="https://nauhcnay.github.io/tag/visualization/index.xml" rel="self" type="application/rss+xml" />
+    <description>Visualization</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 21 Nov 2018 13:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://nauhcnay.github.io/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>Visualization</title>
+      <link>https://nauhcnay.github.io/tag/visualization/</link>
+    </image>
+    
+    <item>
+      <title>Multiple VLAD Encoding of CNNs for Image Classification</title>
+      <link>https://nauhcnay.github.io/publication/multivlad/</link>
+      <pubDate>Wed, 21 Nov 2018 13:00:00 +0000</pubDate>
+      <guid>https://nauhcnay.github.io/publication/multivlad/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Improving Image Classification Accuracy With ELM and CSIFT</title>
+      <link>https://nauhcnay.github.io/publication/elmcnn/</link>
+      <pubDate>Sun, 21 Oct 2018 13:00:00 +0000</pubDate>
+      <guid>https://nauhcnay.github.io/publication/elmcnn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A novel weighted boundary matching error concealment Schema for HEVC</title>
+      <link>https://nauhcnay.github.io/publication/hevcec/</link>
+      <pubDate>Sun, 07 Oct 2018 13:00:00 +0000</pubDate>
+      <guid>https://nauhcnay.github.io/publication/hevcec/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
