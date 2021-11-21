@@ -2,54 +2,54 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2 | Chuan Yan</title>
-    <link>https://nauhcnay.github.io/publication-type/2/</link>
-      <atom:link href="https://nauhcnay.github.io/publication-type/2/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://nauhcnay.github.io/public/publication-type/2/</link>
+      <atom:link href="https://nauhcnay.github.io/public/publication-type/2/index.xml" rel="self" type="application/rss+xml" />
     <description>2</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 21 Nov 2021 13:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://nauhcnay.github.io/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <url>https://nauhcnay.github.io/public/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
       <title>2</title>
-      <link>https://nauhcnay.github.io/publication-type/2/</link>
+      <link>https://nauhcnay.github.io/public/publication-type/2/</link>
     </image>
     
     <item>
       <title>FlatMagic: Improving Flat Colorization through AI-driven Design for DigitalComic Professionals</title>
-      <link>https://nauhcnay.github.io/publication/flatmagic/</link>
+      <link>https://nauhcnay.github.io/public/publication/flatmagic/</link>
       <pubDate>Sun, 21 Nov 2021 13:00:00 +0000</pubDate>
-      <guid>https://nauhcnay.github.io/publication/flatmagic/</guid>
+      <guid>https://nauhcnay.github.io/public/publication/flatmagic/</guid>
       <description>&lt;p&gt;Paper and code will come soon.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>A Benchmark for Rough Sketch Cleanup</title>
-      <link>https://nauhcnay.github.io/publication/benchmark/</link>
+      <link>https://nauhcnay.github.io/public/publication/benchmark/</link>
       <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
-      <guid>https://nauhcnay.github.io/publication/benchmark/</guid>
+      <guid>https://nauhcnay.github.io/public/publication/benchmark/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Multiple VLAD Encoding of CNNs for Image Classification</title>
-      <link>https://nauhcnay.github.io/publication/multivlad/</link>
+      <link>https://nauhcnay.github.io/public/publication/multivlad/</link>
       <pubDate>Wed, 21 Nov 2018 13:00:00 +0000</pubDate>
-      <guid>https://nauhcnay.github.io/publication/multivlad/</guid>
+      <guid>https://nauhcnay.github.io/public/publication/multivlad/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Improving Image Classification Accuracy With ELM and CSIFT</title>
-      <link>https://nauhcnay.github.io/publication/elmcnn/</link>
+      <link>https://nauhcnay.github.io/public/publication/elmcnn/</link>
       <pubDate>Sun, 21 Oct 2018 13:00:00 +0000</pubDate>
-      <guid>https://nauhcnay.github.io/publication/elmcnn/</guid>
+      <guid>https://nauhcnay.github.io/public/publication/elmcnn/</guid>
       <description></description>
     </item>
     
     <item>
       <title>A novel weighted boundary matching error concealment Schema for HEVC</title>
-      <link>https://nauhcnay.github.io/publication/hevcec/</link>
+      <link>https://nauhcnay.github.io/public/publication/hevcec/</link>
       <pubDate>Sun, 07 Oct 2018 13:00:00 +0000</pubDate>
-      <guid>https://nauhcnay.github.io/publication/hevcec/</guid>
+      <guid>https://nauhcnay.github.io/public/publication/hevcec/</guid>
       <description></description>
     </item>
     
