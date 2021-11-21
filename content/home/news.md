@@ -26,4 +26,4 @@ design:
   #   text_color_light: true
 ---
 
-Our paper ["FlatMagic: Improving Flat Colorization through AI-driven Design for DigitalComic Professionals"](./publication/flatmagic) has been accepted by **ACM CHI 2022**.
+Our paper ["FlatMagic: Improving Flat Colorization through AI-driven Design for DigitalComic Professionals"](./publication/flatmagic) has been conditionally accepted by **ACM CHI 2022**.
