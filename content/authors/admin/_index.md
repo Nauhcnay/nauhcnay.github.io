@@ -28,7 +28,7 @@ education:
   - course: PhD in Computer Science
     institution: George Mason University
     year: 2018 - Present
-  - course: PhD in Computer Science
+  - course: PhD (student only) in Computer Science
     institution: South West Jiaotong University
     year: 2011 - 2018
   - course: BSc in Communication Technology
