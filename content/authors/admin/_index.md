@@ -28,7 +28,7 @@ education:
   - course: PhD in Computer Science
     institution: George Mason University
     year: 2018 - Present
-  - course: PhD in Software Engineering
+  - course: PhD in Computer Science
     institution: South West Jiaotong University
     year: 2011 - 2018
   - course: BSc in Communication Technology
@@ -72,6 +72,6 @@ highlight_name: true
 
 I am a PhD student of {{<staticref "https://cragl.cs.gmu.edu/" "newtab">}}Creativity and Graphics Lab (CraGL){{</staticref>}} at {{<staticref "https://www2.gmu.edu/" "newtab" >}}George Mason University{{</staticref>}}. My advisor is {{<staticref "https://cragl.cs.gmu.edu/bio.html" "newtab" >}}Dr. Yotam Gingold{{< /staticref >}}. I obtained my obtained my Bachelor's in Communication Technology from {{<staticref "https://en.swjtu.edu.cn/" "newtab">}} Southwest Jiaotong University{{</staticref>}} in June 2007.
 
-My research interests lies in exploring algorithmic methods methods in artistic drawing and design workflows to help people better realize their creativity. I'm also interested in image compression, generation, editing and recognition in general. I'm currently working on sketch generation and beautification.
+My research interests lies in exploring algorithmic methods in artistic drawing and design workflows to help people better realize their creativity. I'm also interested in image compression, generation, editing and recognition in general. I'm currently working on sketch generation and beautification.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/CV_chuan.pdf" "newtab" >}}resumé{{< /staticref >}}.
