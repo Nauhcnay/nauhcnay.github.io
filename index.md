@@ -13,7 +13,9 @@ I am a PhD student of Creativity and Graphics Lab (CraGL) at George Mason Univer
 
 ## News
 
-- **[Aug. 2024]** Passed my final defense on August 7, 2024, now I'm Dr. Yan! o(*￣▽￣*)ブ
+- **[Aug. 2024]** I joined Prof. [Maneesh Agrawala](https://graphics.stanford.edu/~maneesh/)'s group as a Post-doc.
+
+- **[Aug. 2024]** Passed my final defense on August 7, 2024, now I'm Dr. Yan! o(\*￣▽￣\*)ブ
 
 - **[Aug. 2024]** Our paper ShadowMagic: Designing Human-AI Collaborative Support for Comic Professionals’ Shadowing was accepted to [UIST 2024](https://uist.acm.org/2024/). This is a collaboration with [Amrita Ganguly](https://ist.gmu.edu/node/666), [John Joon Young Chung](https://johnr0.github.io/), [Tong Steven Sun](https://ist.gmu.edu/node/681), Yoon Kiheon, [Yotam Gingold](https://cragl.cs.gmu.edu/) and [Sungsoo Ray Hong](http://www.rayhong.net/?i=1).
 
