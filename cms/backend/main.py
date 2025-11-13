@@ -41,9 +41,18 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
+    import os
+
+    # 获取仓库根目录
+    repo_root = Path(__file__).parent.parent.parent
+    cms_dir = Path(__file__).parent.parent
+
     uvicorn.run(
-        "backend.main:app",
+        "cms.backend.main:app",
         host="0.0.0.0",
         port=8000,
-        reload=True
+        reload=True,
+        reload_dirs=[str(cms_dir)],  # 监控 cms 目录
+        reload_includes=["*.py", "*.html", "*.css", "*.js", "*.yml", "*.yaml", "*.md"],  # 监控这些文件类型
+        log_level="info"
     )
