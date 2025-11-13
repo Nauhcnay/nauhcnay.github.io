@@ -1,0 +1,28 @@
+# FastAPI 核心依赖
+fastapi>=0.100.0
+uvicorn[standard]>=0.23.0
+pydantic>=2.0.0
+
+# 文件处理
+PyYAML>=6.0
+python-multipart>=0.0.6
+Pillow>=10.0.0
+
+# Git 集成
+GitPython>=3.1.0
+
+# 工具库
+python-dateutil>=2.8.0
+aiofiles>=23.0.0
+
+# 以下是可选依赖，暂时注释掉
+# Google Scholar 抓取（可选，需要时再安装）
+# scholarly==1.7.11
+# beautifulsoup4==4.12.3
+# requests==2.31.0
+
+# 文件监控（Overleaf PDF 监控，可选）
+# watchdog==4.0.0
+
+# 调度任务（可选）
+# APScheduler==3.10.4
