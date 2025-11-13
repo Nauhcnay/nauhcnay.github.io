@@ -70,7 +70,7 @@ document.getElementById('save-profile-btn')?.addEventListener('click', async () 
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(about),
+                body: JSON.stringify({content: about}),
             });
         }
 
@@ -82,7 +82,7 @@ document.getElementById('save-profile-btn')?.addEventListener('click', async () 
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(research),
+                body: JSON.stringify({content: research}),
             });
         }
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS API 测试</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #4caf50;
+            color: white;
+        }
+        .status.error {
+            background: #f44336;
+            color: white;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+            max-height: 300px;
+        }
+        button {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 5px 5px 0;
+        }
+        button:hover {
+            background: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <h1>CMS API 测试页面</h1>
+    <button onclick="runAllTests()">运行所有测试</button>
+    <button onclick="location.href='/'">返回 CMS</button>
+
+    <div id="test-results"></div>
+
+    <script>
+        async function testAPI(name, endpoint) {
+            const section = document.createElement('div');
+            section.className = 'test-section';
+            section.innerHTML = `<h3>${name} <span class="status">测试中...</span></h3>`;
+            document.getElementById('test-results').appendChild(section);
+
+            try {
+                const response = await fetch(`/api${endpoint}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    section.innerHTML = `
+                        <h3>${name} <span class="status success">✓ 成功</span></h3>
+                        <p><strong>状态码:</strong> ${response.status}</p>
+                        <p><strong>响应数据:</strong></p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                } else {
+                    section.innerHTML = `
+                        <h3>${name} <span class="status error">✗ 失败</span></h3>
+                        <p><strong>状态码:</strong> ${response.status}</p>
+                        <p><strong>错误信息:</strong></p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                }
+            } catch (error) {
+                section.innerHTML = `
+                    <h3>${name} <span class="status error">✗ 异常</span></h3>
+                    <p><strong>错误:</strong> ${error.message}</p>
+                `;
+            }
+        }
+
+        async function runAllTests() {
+            document.getElementById('test-results').innerHTML = '';
+
+            await testAPI('健康检查', '/health');
+            await testAPI('论文列表', '/publications/');
+            await testAPI('新闻列表', '/news/');
+            await testAPI('个人信息', '/profile/');
+            await testAPI('Git 状态', '/git/status');
+        }
+
+        // 页面加载时自动运行测试
+        window.addEventListener('DOMContentLoaded', runAllTests);
+    </script>
+</body>
+</html>
