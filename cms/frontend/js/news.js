@@ -26,7 +26,12 @@ function renderNews() {
         return;
     }
 
-    container.innerHTML = AppState.news.map((item, index) => `
+    // 显示最近3条新闻作为预览
+    const previewCount = 3;
+    const newsToShow = AppState.news.slice(0, previewCount);
+    const hasMore = AppState.news.length > previewCount;
+
+    let html = newsToShow.map((item, index) => `
         <div class="news-card">
             <div class="flex-1">
                 <div class="flex items-center gap-3 mb-2">
@@ -44,6 +49,63 @@ function renderNews() {
             </div>
         </div>
     `).join('');
+
+    // 如果有更多新闻，显示统计信息
+    if (hasMore) {
+        html += `
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+                <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                <span class="text-blue-800">
+                    显示最近 ${previewCount} 条，共 ${AppState.news.length} 条新闻
+                </span>
+                <button onclick="showAllNews()" class="ml-3 text-blue-600 hover:text-blue-800 underline">
+                    查看全部
+                </button>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center text-sm text-gray-600">
+                <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                共 ${AppState.news.length} 条新闻
+            </div>
+        `;
+    }
+
+    container.innerHTML = html;
+}
+
+// 显示所有新闻
+function showAllNews() {
+    const container = document.getElementById('news-list');
+
+    const html = AppState.news.map((item, index) => `
+        <div class="news-card">
+            <div class="flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="badge badge-blue">${escapeHtml(item.date)}</span>
+                </div>
+                <p class="text-gray-800">${escapeHtml(item.content)}</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="editNews(${index})" class="btn-success">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button onclick="deleteNews(${index})" class="btn-danger">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    `).join('') + `
+        <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 text-center">
+            <span class="text-gray-600">共 ${AppState.news.length} 条新闻</span>
+            <button onclick="renderNews()" class="ml-3 text-blue-600 hover:text-blue-800 underline">
+                <i class="fas fa-compress-alt mr-1"></i>收起
+            </button>
+        </div>
+    `;
+
+    container.innerHTML = html;
 }
 
 // 打开添加新闻模态框
@@ -66,14 +128,33 @@ function openNewsModal(newsItem = null, index = null) {
         document.getElementById('news-edit-index').value = index;
 
         // 填充表单
-        form.date.value = newsItem.date || '';
+        // 尝试解析日期格式，支持多种格式
+        let dateValue = newsItem.date || '';
+
+        // 如果是 "Aug. 2024" 这样的格式，转换为 "2024-08"
+        const monthNames = {
+            'Jan.': '01', 'Feb.': '02', 'Mar.': '03', 'Apr.': '04',
+            'May.': '05', 'Jun.': '06', 'Jul.': '07', 'Aug.': '08',
+            'Sep.': '09', 'Oct.': '10', 'Nov.': '11', 'Dec.': '12'
+        };
+
+        const match = dateValue.match(/^(\w+\.?)\s+(\d{4})$/);
+        if (match) {
+            const monthAbbr = match[1];
+            const year = match[2];
+            if (monthNames[monthAbbr]) {
+                dateValue = `${year}-${monthNames[monthAbbr]}`;
+            }
+        }
+
+        form.date.value = dateValue;
         form.content.value = newsItem.content || '';
     } else {
         // 添加模式
         title.textContent = '添加新闻';
         document.getElementById('news-edit-index').value = '';
 
-        // 自动填充当前日期
+        // 自动填充当前日期（YYYY-MM 格式）
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');

@@ -177,12 +177,13 @@
                     <div class="modal-body">
                         <form id="news-form" class="space-y-4">
                             <div>
-                                <label class="form-label">日期 *</label>
-                                <input type="text" name="date" class="form-input" placeholder="2024-10" required>
+                                <label class="form-label">日期 * <span class="text-sm text-gray-500">(选择月份或输入完整日期)</span></label>
+                                <input type="month" name="date" class="form-input" required>
+                                <p class="text-xs text-gray-500 mt-1">格式示例：2024-10 或手动输入 2024-10-15</p>
                             </div>
                             <div>
                                 <label class="form-label">内容 * (支持 Markdown)</label>
-                                <textarea name="content" class="form-input" rows="4" required></textarea>
+                                <textarea name="content" class="form-input" rows="4" required placeholder="例如：Our paper **Title** was accepted to Conference 2024!"></textarea>
                             </div>
                             <input type="hidden" name="index" id="news-edit-index">
                         </form>
