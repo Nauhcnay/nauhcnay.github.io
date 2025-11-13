@@ -113,40 +113,12 @@ class MarkdownHandler:
 
     def read_about(self) -> Optional[str]:
         """读取 About Me 章节"""
-        # About Me 通常在文件开头，第一个 ## 之前
-        content = self.read_index()
-
-        # 跳过 YAML front matter
-        content = re.sub(r"^---\n.*?\n---\n", "", content, flags=re.DOTALL)
-
-        # 找到第一个 ## 标题之前的内容
-        match = re.search(r"^(.*?)(?=^##\s+)", content, re.MULTILINE | re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        return None
+        # 提取 ## About Me 章节的内容
+        return self.extract_section("About Me")
 
     def update_about(self, new_content: str) -> None:
         """更新 About Me 章节"""
-        content = self.read_index()
-
-        # 保留 YAML front matter
-        front_matter = ""
-        main_content = content
-
-        fm_match = re.match(r"^(---\n.*?\n---\n)(.*)", content, re.DOTALL)
-        if fm_match:
-            front_matter = fm_match.group(1)
-            main_content = fm_match.group(2)
-
-        # 替换第一个 ## 之前的内容
-        new_main = re.sub(
-            r"^.*?(?=^##\s+)",
-            new_content.strip() + "\n\n",
-            main_content,
-            flags=re.MULTILINE | re.DOTALL
-        )
-
-        self.write_index(front_matter + new_main)
+        self.update_section("About Me", new_content)
 
     def _create_backup(self, file_path: Path) -> None:
         """创建文件备份"""

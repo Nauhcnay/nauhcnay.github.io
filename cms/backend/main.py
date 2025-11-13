@@ -27,7 +27,13 @@ app.include_router(news_router)
 app.include_router(profile_router)
 app.include_router(git_router)
 
-# 挂载静态文件（前端）
+# 挂载 assets 目录（论文图片、PDF 等静态资源）
+REPO_ROOT = Path(__file__).parent.parent.parent
+ASSETS_DIR = REPO_ROOT / "assets"
+if ASSETS_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=str(ASSETS_DIR)), name="assets")
+
+# 挂载静态文件（前端界面）
 FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
 if FRONTEND_DIR.exists():
     app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")
