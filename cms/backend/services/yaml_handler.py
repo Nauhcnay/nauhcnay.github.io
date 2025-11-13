@@ -20,17 +20,41 @@ class YAMLHandler:
 
         with open(self.publications_file, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f)
-            return data if data else []
+
+            # 处理不同的 YAML 格式
+            if data is None:
+                return []
+
+            # 如果有 'main' 顶层键，提取其中的列表
+            if isinstance(data, dict) and 'main' in data:
+                publications = data['main']
+                return publications if isinstance(publications, list) else []
+
+            # 直接返回列表
+            if isinstance(data, list):
+                return data
+
+            return []
 
     def write_publications(self, publications: List[Dict[str, Any]]) -> None:
         """写入论文列表"""
         # 创建备份
         self._create_backup(self.publications_file)
 
-        # 写入新数据
+        # 检查原文件格式，保持一致
+        use_main_key = False
+        if self.publications_file.exists():
+            with open(self.publications_file, "r", encoding="utf-8") as f:
+                original_data = yaml.safe_load(f)
+                if isinstance(original_data, dict) and 'main' in original_data:
+                    use_main_key = True
+
+        # 写入新数据，保持原格式
+        data_to_write = {'main': publications} if use_main_key else publications
+
         with open(self.publications_file, "w", encoding="utf-8") as f:
             yaml.dump(
-                publications,
+                data_to_write,
                 f,
                 allow_unicode=True,
                 default_flow_style=False,
