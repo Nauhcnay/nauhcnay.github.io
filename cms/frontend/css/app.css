@@ -5,118 +5,257 @@ body {
 
 /* 按钮样式 */
 .btn-primary {
-    @apply px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium inline-flex items-center;
+    padding: 0.5rem 1rem;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .btn-secondary {
-    @apply px-4 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium;
+    padding: 0.5rem 1rem;
+    background-color: #e5e7eb;
+    color: #1f2937;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.btn-secondary:hover {
+    background-color: #d1d5db;
 }
 
 .btn-danger {
-    @apply px-3 py-1.5 bg-red-600 text-white rounded hover:bg-red-700 transition-colors duration-200 text-sm;
+    padding: 0.375rem 0.75rem;
+    background-color: #dc2626;
+    color: white;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.btn-danger:hover {
+    background-color: #b91c1c;
 }
 
 .btn-success {
-    @apply px-3 py-1.5 bg-green-600 text-white rounded hover:bg-green-700 transition-colors duration-200 text-sm;
+    padding: 0.375rem 0.75rem;
+    background-color: #16a34a;
+    color: white;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.btn-success:hover {
+    background-color: #15803d;
 }
 
 /* Tab 样式 */
 .tab-btn {
-    @apply py-4 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300 transition-colors duration-200 inline-flex items-center;
+    padding: 1rem 0.25rem;
+    border-bottom: 2px solid transparent;
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: #6b7280;
+    transition: color 0.2s, border-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    cursor: pointer;
 }
-
+.tab-btn:hover {
+    color: #374151;
+    border-bottom-color: #d1d5db;
+}
 .tab-btn.active {
-    @apply border-blue-600 text-blue-600;
+    border-bottom-color: #2563eb;
+    color: #2563eb;
 }
 
 .tab-content {
-    @apply hidden;
+    display: none;
 }
-
 .tab-content.active {
-    @apply block;
+    display: block;
 }
 
 /* 表单样式 */
 .form-label {
-    @apply block text-sm font-medium text-gray-700 mb-1;
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.25rem;
 }
 
 .form-input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    font-size: 0.875rem;
+    box-sizing: border-box;
 }
-
+.form-input:focus {
+    outline: none;
+    ring: 2px;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
 .form-input:disabled {
-    @apply bg-gray-100 cursor-not-allowed;
+    background-color: #f3f4f6;
+    cursor: not-allowed;
 }
 
 /* 模态框样式 */
 .modal {
-    @apply hidden fixed inset-0 bg-black bg-opacity-50 z-50 items-center justify-center p-4;
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
 }
-
 .modal.active {
-    @apply flex;
+    display: flex;
 }
 
 .modal-content {
-    @apply bg-white rounded-lg shadow-xl w-full max-h-[90vh] overflow-y-auto;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.1);
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-header {
-    @apply flex items-center justify-between p-6 border-b border-gray-200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .modal-body {
-    @apply p-6;
+    padding: 1.5rem;
 }
 
 .modal-footer {
-    @apply flex items-center justify-end space-x-3 p-6 border-t border-gray-200;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1.5rem;
+    border-top: 1px solid #e5e7eb;
 }
 
 .modal-close {
-    @apply text-gray-400 hover:text-gray-600 transition-colors duration-200;
+    color: #9ca3af;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+.modal-close:hover {
+    color: #4b5563;
 }
 
 /* 卡片样式 */
 .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    border: 1px solid #e5e7eb;
+    padding: 1rem;
+    transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
 }
 
 /* 论文卡片 */
 .publication-card {
-    @apply card flex gap-4;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    border: 1px solid #e5e7eb;
+    padding: 1rem;
+    transition: box-shadow 0.2s;
+    display: flex;
+    gap: 1rem;
 }
-
+.publication-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
+}
 .publication-card img {
-    @apply w-32 h-32 object-cover rounded;
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 0.25rem;
 }
 
 /* 新闻卡片 */
 .news-card {
-    @apply card flex items-start justify-between;
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    border: 1px solid #e5e7eb;
+    padding: 1rem;
+    transition: box-shadow 0.2s;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.news-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.1);
 }
 
 /* 通知样式 */
 .notification {
-    @apply px-4 py-3 rounded-lg shadow-lg text-white font-medium min-w-[300px] max-w-[500px] animate-slide-in;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -4px rgba(0,0,0,.1);
+    color: white;
+    font-weight: 500;
+    min-width: 300px;
+    max-width: 500px;
+    animation: slide-in 0.3s ease-out;
 }
-
 .notification.success {
-    @apply bg-green-500;
+    background-color: #22c55e;
 }
-
 .notification.error {
-    @apply bg-red-500;
+    background-color: #ef4444;
 }
-
 .notification.info {
-    @apply bg-blue-500;
+    background-color: #3b82f6;
 }
-
 .notification.warning {
-    @apply bg-yellow-500;
+    background-color: #eab308;
 }
 
 @keyframes slide-in {
@@ -130,34 +269,41 @@ body {
     }
 }
 
-.animate-slide-in {
-    animation: slide-in 0.3s ease-out;
-}
-
 /* Badge 样式 */
 .badge {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.625rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
 }
-
 .badge-green {
-    @apply bg-green-100 text-green-800;
+    background-color: #dcfce7;
+    color: #166534;
 }
-
 .badge-yellow {
-    @apply bg-yellow-100 text-yellow-800;
+    background-color: #fef9c3;
+    color: #854d0e;
 }
-
 .badge-red {
-    @apply bg-red-100 text-red-800;
+    background-color: #fee2e2;
+    color: #991b1b;
 }
-
 .badge-blue {
-    @apply bg-blue-100 text-blue-800;
+    background-color: #dbeafe;
+    color: #1e40af;
 }
 
 /* 加载动画 */
 .spinner {
-    @apply inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid white;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -166,24 +312,22 @@ body {
     }
 }
 
-.animate-spin {
-    animation: spin 1s linear infinite;
-}
-
 /* 空状态 */
 .empty-state {
-    @apply text-center py-12 text-gray-500;
+    text-align: center;
+    padding: 3rem 0;
+    color: #6b7280;
 }
-
 .empty-state i {
-    @apply text-4xl mb-3 text-gray-400;
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+    color: #9ca3af;
 }
 
 /* 拖拽样式 */
 .dragging {
-    @apply opacity-50;
+    opacity: 0.5;
 }
-
 .drag-over {
-    @apply border-2 border-blue-500 border-dashed;
+    border: 2px dashed #3b82f6;
 }
