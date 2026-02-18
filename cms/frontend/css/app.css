@@ -396,3 +396,27 @@ body {
 .drag-over {
     border: 2px dashed #3b82f6;
 }
+
+/* 作者标签 */
+.author-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.6rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    color: #374151;
+}
+.author-chip:hover {
+    border-color: #2563eb;
+}
+.author-chip.bold {
+    background: #2563eb;
+    color: white;
+    border-color: #2563eb;
+    font-weight: 600;
+}

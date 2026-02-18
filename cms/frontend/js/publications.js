@@ -1,5 +1,82 @@
 // 论文管理模块
 
+// ── 作者解析与加粗切换 ──────────────────────────────────────────
+
+// 解析作者字符串为 [{name, bold}] 数组
+function parseAuthorsString(str) {
+    if (!str || !str.trim()) return [];
+    return str.split(',').map(function(s) {
+        s = s.trim();
+        if (!s) return null;
+        var match = s.match(/^<strong>(.*?)<\/strong>$/);
+        if (match) {
+            return { name: match[1], bold: true };
+        }
+        return { name: s, bold: false };
+    }).filter(Boolean);
+}
+
+// 将作者数组序列化回字符串
+function serializeAuthors(authors) {
+    return authors.map(function(a) {
+        return a.bold ? '<strong>' + a.name + '</strong>' : a.name;
+    }).join(', ');
+}
+
+// 渲染作者标签到 chips 容器
+function renderAuthorChips(authors) {
+    var container = document.getElementById('author-chips');
+    if (!container) return;
+    if (!authors || authors.length === 0) {
+        container.innerHTML = '<span class="text-xs text-gray-400">输入作者后将自动解析为标签</span>';
+        return;
+    }
+    container.innerHTML = authors.map(function(a, i) {
+        return '<span class="author-chip' + (a.bold ? ' bold' : '') + '" data-index="' + i + '">' +
+            escapeHtml(a.name) + '</span>';
+    }).join('');
+}
+
+// 当前编辑中的作者列表
+var currentAuthors = [];
+
+// 从输入框同步到 chips
+function syncAuthorsFromInput() {
+    var input = document.querySelector('#publication-form input[name="authors"]');
+    if (!input) return;
+    currentAuthors = parseAuthorsString(input.value);
+    renderAuthorChips(currentAuthors);
+}
+
+// 从 chips 同步回输入框
+function syncAuthorsToInput() {
+    var input = document.querySelector('#publication-form input[name="authors"]');
+    if (!input) return;
+    input.value = serializeAuthors(currentAuthors);
+}
+
+// 输入框变化时自动解析（去抖动）
+var authorsDebounce = null;
+document.getElementById('publication-form')?.querySelector('input[name="authors"]')
+    ?.addEventListener('input', function() {
+        clearTimeout(authorsDebounce);
+        authorsDebounce = setTimeout(syncAuthorsFromInput, 400);
+    });
+
+// 点击 chip 切换加粗
+document.getElementById('author-chips')?.addEventListener('click', function(e) {
+    var chip = e.target.closest('.author-chip');
+    if (!chip) return;
+    var idx = parseInt(chip.dataset.index);
+    if (idx >= 0 && idx < currentAuthors.length) {
+        currentAuthors[idx].bold = !currentAuthors[idx].bold;
+        renderAuthorChips(currentAuthors);
+        syncAuthorsToInput();
+    }
+});
+
+// ── 论文列表 ────────────────────────────────────────────────────
+
 // 加载论文列表
 async function loadPublications() {
     try {
@@ -230,6 +307,7 @@ function fillFormFromImport(data) {
     if (data.conference_short) form.conference_short.value = data.conference_short;
     if (data.conference) form.conference.value = data.conference;
     if (data.pdf) form.pdf.value = data.pdf;
+    syncAuthorsFromInput();
 }
 
 // 导入步骤事件监听
@@ -272,6 +350,9 @@ function openPublicationModal(publication = null, index = null) {
     document.getElementById('bibtex-paste-area').style.display = '';
     document.getElementById('bibtex-upload-area').style.display = 'none';
     resetImportStep();
+    // 重置作者标签
+    currentAuthors = [];
+    renderAuthorChips(currentAuthors);
 
     if (publication) {
         // 编辑模式：直接显示表单，跳过导入步骤
@@ -295,6 +376,9 @@ function openPublicationModal(publication = null, index = null) {
         if (publication.image) {
             showImagePreview(publication.image);
         }
+
+        // 解析作者标签
+        syncAuthorsFromInput();
 
         showFormStep();
     } else {

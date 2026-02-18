@@ -41,7 +41,7 @@ function renderProfile() {
 }
 
 // 保存个人信息
-document.getElementById('save-profile-btn')?.addEventListener('click', async () => {
+async function saveProfile() {
     const btn = document.getElementById('save-profile-btn');
     const originalText = btn.innerHTML;
 
@@ -100,15 +100,15 @@ document.getElementById('save-profile-btn')?.addEventListener('click', async () 
         btn.disabled = false;
         btn.innerHTML = originalText;
     }
-});
+}
 
 // 上传 CV
-document.getElementById('upload-cv-btn')?.addEventListener('click', async () => {
+async function uploadCV() {
     const fileInput = document.getElementById('cv-upload');
     const btn = document.getElementById('upload-cv-btn');
     const status = document.getElementById('cv-upload-status');
 
-    if (!fileInput.files || fileInput.files.length === 0) {
+    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
         showNotification('请先选择 PDF 文件', 'error');
         return;
     }
@@ -124,13 +124,21 @@ document.getElementById('upload-cv-btn')?.addEventListener('click', async () => 
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>上传中...';
 
+        // 直接使用 fetch，不经过 apiRequest（避免 Content-Type 被覆盖）
         const formData = new FormData();
         formData.append('file', file);
 
-        const result = await apiRequest('/profile/upload-cv', {
+        const response = await fetch('/api/profile/upload-cv', {
             method: 'POST',
             body: formData,
         });
+
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.detail || `HTTP ${response.status}`);
+        }
+
+        const result = await response.json();
 
         // 更新显示
         document.getElementById('cv-current-file').textContent = file.name;
@@ -147,4 +155,4 @@ document.getElementById('upload-cv-btn')?.addEventListener('click', async () => 
         btn.disabled = false;
         btn.innerHTML = originalText;
     }
-});
+}

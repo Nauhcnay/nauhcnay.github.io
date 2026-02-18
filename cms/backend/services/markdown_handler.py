@@ -33,7 +33,8 @@ class MarkdownHandler:
         content = self.read_index()
 
         # 匹配章节标题（支持 # 或 ## 开头）
-        pattern = rf"^#{1,2}\s+{re.escape(section_name)}.*?$\n(.*?)(?=^#{1,2}\s+|\Z)"
+        # 注意: rf-string 中 {1,2} 会被 f-string 解析，必须写成 {{1,2}}
+        pattern = rf"^#{{1,2}}\s+{re.escape(section_name)}.*?$\n(.*?)(?=^#{{1,2}}\s+|\Z)"
         match = re.search(pattern, content, re.MULTILINE | re.DOTALL)
 
         if match:
@@ -45,7 +46,7 @@ class MarkdownHandler:
         content = self.read_index()
 
         # 匹配章节标题
-        pattern = rf"(^#{1,2}\s+{re.escape(section_name)}.*?$\n)(.*?)(?=^#{1,2}\s+|\Z)"
+        pattern = rf"(^#{{1,2}}\s+{re.escape(section_name)}.*?$\n)(.*?)(?=^#{{1,2}}\s+|\Z)"
 
         def replace_func(match):
             return match.group(1) + new_content.strip() + "\n\n"

@@ -1,6 +1,49 @@
 main:
+- title: Enhancing 6D Pose Estimation with Cross-modal Fusion Network and Density-peak
+    Keypoint Localization
+  authors: Liming Zhang, Qing Li, Zhenhong Chen, Chuan Yan, Xiaojiang Peng
+  conference_short: IIICASSP 2025
+  conference: ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech
+    and Signal Processing (ICASSP)
+  pdf: https://doi.org/10.1109/ICASSP49660.2025.10890042
+  bibtex: ./assets/bib/Enhancing_6D_Pose_Estimation_with_Cross_modal_Fusi.bib
+  image: ./assets/img/publication_20260217_175145.png
+  featured: false
+  order: 0
+- title: Global Attention-Guided Dual-Domain Point Cloud Feature Learning for Classification
+    and Segmentation
+  authors: Zihao Li, Pan Gao, Kang You, Chuan Yan, Manoranjan Paul
+  conference_short: ITAI 2024
+  conference: IEEE Transactions on Artificial Intelligence
+  pdf: https://doi.org/10.1109/TAI.2024.3429050
+  bibtex: ./assets/bib/Global_Attention_Guided_Dual_Domain_Point_Cloud_Fe.bib
+  image: ./assets/img/publication_20260217_174830.png
+  featured: false
+  order: 0
+- title: 'SmokeSAM: Vehicle Black Smoke Segmentation Based on SAM and LoRA Fine-Tuning'
+  authors: Zeyu Dong, Qing Li, Chuan Yan, Xiaojiang Peng
+  conference_short: ICML 2025
+  conference: 2025 6th International Conference on Machine Learning and Computer Application
+    (ICMLCA)
+  pdf: https://doi.org/10.1109/ICMLCA66850.2025.11336530
+  bibtex: ./assets/bib/SmokeSAM_Vehicle_Black_Smoke_Segmentation_Based_on.bib
+  image: ./assets/img/publication_20260217_174130.png
+  featured: false
+  order: 0
+- title: Generating Past and Future in Digital Painting Processes
+  authors: Lvmin Zhang, <strong>Chuan Yan</strong>, Yuwei Guo, Jinbo Xing, Maneesh
+    Agrawala
+  conference_short: SIGGAPH 2025
+  conference: ACM Transactions on Graphics
+  pdf: https://doi.org/10.1145/3731160
+  code: https://github.com/lllyasviel/Paints-UNDO
+  page: https://lllyasviel.github.io/paints_alter_web/
+  bibtex: ./assets/bib/Instance_Segmentation_of_Scene_Sketches_Using_Natu.bib
+  image: ./assets/img/publication_20260217_165006.jpg
+  featured: true
+  order: 0
 - title: Instance Segmentation of Scene Sketches Using Natural Image Priors
-  authors: Mia Tang, Yael Vinker, <strong>Chuan Yan*</strong>, Lvmin Zhang, Maneesh
+  authors: Mia Tang, Yael Vinker, <strong>Chuan Yan</strong>, Lvmin Zhang, Maneesh
     Agrawala
   conference_short: SIGGRAPH 2025
   conference: Proceedings of the Special Interest Group on Computer Graphics and Interactive
@@ -8,6 +51,7 @@ main:
   pdf: https://doi.org/10.1145/3721238.3730606
   code: https://github.com/miatang13/InkLayer
   page: https://inklayer.github.io/
+  bibtex: ./assets/bib/Instance_Segmentation_of_Scene_Sketches_Using_Natu.bib
   image: ./assets/img/publication_20260217_160952.png
   featured: true
   order: 0

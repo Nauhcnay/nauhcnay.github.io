@@ -114,8 +114,8 @@ async def upload_cv(file: UploadFile = File(...)):
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        # 更新配置
-        relative_path = f"./assets/files/{file.filename}"
+        # 更新配置（不加 ./ 前缀，与 _config.yml 现有格式一致）
+        relative_path = f"assets/files/{file.filename}"
         yaml_handler.update_config_field("cv_link", relative_path)
 
         return {

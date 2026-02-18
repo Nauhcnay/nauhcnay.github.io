@@ -143,8 +143,9 @@
                                     <input type="text" name="title" class="form-input" required>
                                 </div>
                                 <div class="col-span-2">
-                                    <label class="form-label">作者 *</label>
+                                    <label class="form-label">作者 * <span class="text-xs text-gray-500 ml-1">逗号分隔，点击名字切换加粗</span></label>
                                     <input type="text" name="authors" class="form-input" placeholder="Author1, Author2, Author3" required>
+                                    <div id="author-chips" class="flex flex-wrap gap-2 mt-2 min-h-[2rem]"></div>
                                 </div>
                                 <div>
                                     <label class="form-label">会议简称 *</label>
@@ -314,7 +315,7 @@
                                 </p>
                                 <input type="file" id="cv-upload" accept=".pdf" class="form-input">
                             </div>
-                            <button type="button" id="upload-cv-btn" class="btn-primary self-end">
+                            <button type="button" id="upload-cv-btn" class="btn-primary self-end" onclick="uploadCV()">
                                 <i class="fas fa-upload mr-2"></i>上传 CV
                             </button>
                         </div>
@@ -333,7 +334,7 @@
                         <textarea id="profile-research" class="form-input" rows="4"></textarea>
                     </div>
 
-                    <button id="save-profile-btn" class="btn-primary">
+                    <button id="save-profile-btn" class="btn-primary" onclick="saveProfile()">
                         <i class="fas fa-save mr-2"></i>保存个人信息
                     </button>
                 </div>
