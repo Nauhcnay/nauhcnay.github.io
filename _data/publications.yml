@@ -1,4 +1,13 @@
 main:
+- title: Self-ensembling for 3D point cloud domain adaptation
+  authors: Qing Li*, Xiaojiang Peng, <strong>Chuan Yan</strong>, Pan Gao, Qi Hao
+  conference_short: IVC 2025
+  conference: Image and Vision Computing
+  pdf: https://doi.org/https://doi.org/10.1016/j.imavis.2024.105409
+  bibtex: ./assets/bib/Self_ensembling_for_3D_point_cloud_domain_adaptati.bib
+  image: ./assets/img/publication_20260217_214108.png
+  featured: false
+  order: 0
 - title: 'SmokeSAM: Vehicle Black Smoke Segmentation Based on SAM and LoRA Fine-Tuning'
   authors: Zeyu Dong, Qing Li, Chuan Yan, Xiaojiang Peng
   conference_short: ICML 2025
