@@ -1,0 +1,59 @@
+main:
+
+  - title: "ShadowMagic: Designing Human-AI Collaborative Support for Comic Professionals' Shadowing"
+    authors: "Amrita Ganguly*, <strong>Chuan Yan</strong>, John Joon Young Chung, Tong Steven Sun, Yoon Kiheon, Yotam Gingold, Sungsoo Ray Hong (*Corresponding author)"
+    conference_short: "UIST 2024"
+    conference: "The ACM Symposium on User Interface Software and Technology 2024"
+    pdf: ""
+    code: ""
+    bibtex: ""
+    image: "./assets/img/teaser_shadowmaigc2024.jpg"
+
+  - title: "Deep Sketch Vectorization via Implicit Surface Extraction"
+    authors: "<strong>Chuan Yan*</strong>, Yong Li, Deepali Aneja, Matthew Fisher, Edgar Simo-Serra, Yotam Gingold (*Corresponding author)"
+    conference_short: "SIGGRAPH 2024"
+    conference: "ACM Transactions on Graphics (TOG) 43(4)"
+    pdf: "https://cragl.cs.gmu.edu/sketchvector/Deep%20Sketch%20Vectorization%20via%20Implicit%20Surface%20Extraction%20(Chuan%20Yan,%20Yong%20Li,%20Deepali%20Aneja,%20Matthew%20Fisher,%20Edgar%20Simo-Serra,%20Yotam%20Gingold%202024%20SIGGRAPH).pdf"
+    code: "https://github.com/Nauhcnay/Deep-Sketch-Vectorization"
+    bibtex: "./assets/bib/DeepSketchVectorization2024.bib"
+    image: "./assets/img/teaser_sketchVG2024.jpg"
+
+  - title: "FlatMagic: Improving Flat Colorization through AI-driven Design for Digital Comic Professionals"
+    authors: "<strong>Chuan Yan</strong>, John Joon Young Chung, Kiheon Yoon, Yotam Gingold, Eytan Adar, Sungsoo Ray Hong* (*Corresponding author)"
+    conference_short: "CHI 2022"
+    conference: "ACM CHI Conference on Human Factors in Computing Systems 2022"
+    pdf: "https://cragl.cs.gmu.edu/flatmagic/FlatMagic-%20Improving%20Flat%20Colorization%20through%20AI-driven%20Design%20for%20Digital%20Comic%20Professionals%20[Chuan%20Yan,%20John%20Joon%20Young%20Chung,%20Kiheon%20Yoon,%20Yotam%20Gingold,%20Eytan%20Adar,%20Sungsoo%20Ray%20Hong%202022%20CHI].pdf"
+    code: "https://github.com/Nauhcnay/flat_magic_backend"
+    bibtex: "./assets/bib/FlatMagic2022.bib"
+    image: "./assets/img/teaser_flatmagic2022.jpg"
+
+  - title: "A Benchmark for Rough Sketch Cleanup"
+    authors: "<strong>Chuan Yan</strong>, David Vanderhaeghe, Yotam Gingold* (*Corresponding author)"
+    conference_short: "SIGGRAPH Asia 2020"
+    conference: "ACM Transactions on Graphics (TOG) 39(6)"
+    pdf: "https://cragl.cs.gmu.edu/sketchbench/A%20Benchmark%20for%20Rough%20Sketch%20Cleanup%20(Chuan%20Yan,%20David%20Vanderhaeghe,%20Yotam%20Gingold%202020%20SIGGRAPH%20Asia)%20600dpi.pdf"
+    code: "https://github.com/Nauhcnay/A-Benchmark-for-Rough-Sketch-Cleanup"
+    bibtex: "./assets/bib/Benchmark2020.bib"
+    image: "./assets/img/teaser_benchmark2020.jpg"
+  
+  # examples
+  # - title:  Deep Sketch Vectorization via Implicit Surface Extraction 
+  #   authors: Yixiao Zhang, Xinyi Li, Huimiao Chen, Alan Yuille, <strong>Yaoyao Liu*</strong>, Zongwei Zhou* (*Corresponding authors)
+  #   conference_short: MICCAI
+  #   conference: International Conference on Medical Image Computing and Computer-Assisted Intervention <strong>(MICCAI)</strong>, 2023.
+  #   pdf: https://arxiv.org/pdf/2306.00988.pdf
+  #   code: https://github.com/MrGiovanni/ContinualLearning
+  #   bibtex: https://bib.yliu.me/MICCAI23.txt
+  #   image: ./assets/img/teaser_example_2.png
+  #   notes: Early Accept
+
+  # - title: "Mnemonics Training: Multi-Class Incremental Learning without Forgetting"
+  #   authors: <strong>Yaoyao Liu</strong>, Yuting Su, An-An Liu, Bernt Schiele, Qianru Sun
+  #   conference_short: CVPR
+  #   conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2020.
+  #   pdf: https://arxiv.org/pdf/2002.10211.pdf
+  #   code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
+  #   page: https://class-il.mpi-inf.mpg.de/mnemonics/
+  #   bibtex: https://class-il.mpi-inf.mpg.de/mnemonics/
+  #   notes: Oral Presentation
+  #   image: ./assets/img/teaser_example.png

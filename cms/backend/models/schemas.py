@@ -98,3 +98,9 @@ class GitCommit(BaseModel):
 class ScholarQuery(BaseModel):
     """Google Scholar 查询模型"""
     url: str = Field(..., description="Google Scholar 论文页面 URL")
+
+
+class ImportRequest(BaseModel):
+    """论文导入请求模型"""
+    method: str = Field(..., description="导入方式: bibtex / url / scholar")
+    input: str = Field(..., description="BibTeX 字符串或 URL")

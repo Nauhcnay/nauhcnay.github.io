@@ -4,8 +4,9 @@ from pathlib import Path
 import shutil
 from datetime import datetime
 
-from ..models.schemas import Publication
+from ..models.schemas import Publication, ImportRequest
 from ..services.yaml_handler import YAMLHandler
+from ..services.publication_parser import parse_bibtex, parse_paper_url, parse_scholar_url
 
 router = APIRouter(prefix="/api/publications", tags=["publications"])
 
@@ -65,6 +66,26 @@ async def reorder_publications(indices: List[int]):
         return publications
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/import")
+async def import_publication(req: ImportRequest):
+    """从 BibTeX / URL / Google Scholar 导入论文信息"""
+    parsers = {
+        "bibtex": parse_bibtex,
+        "url": parse_paper_url,
+        "scholar": parse_scholar_url,
+    }
+    parser = parsers.get(req.method)
+    if not parser:
+        return {"success": False, "data": None, "error": f"不支持的导入方式: {req.method}"}
+    try:
+        data = parser(req.input)
+        return {"success": True, "data": data, "error": None}
+    except ValueError as e:
+        return {"success": False, "data": None, "error": str(e)}
+    except Exception as e:
+        return {"success": False, "data": None, "error": f"解析失败: {e}"}
 
 
 @router.post("/upload-image")

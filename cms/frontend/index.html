@@ -86,6 +86,38 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <!-- 导入步骤（仅添加模式显示） -->
+                        <div id="import-step">
+                            <p class="text-sm text-gray-600 mb-4">选择导入方式快速填充表单，或跳过手动填写。</p>
+                            <div class="import-methods">
+                                <button type="button" class="import-method-card" data-method="bibtex">
+                                    <i class="fas fa-code fa-lg"></i>
+                                    <span class="font-medium">粘贴 BibTeX</span>
+                                    <span class="text-xs text-gray-500">从 Google Scholar 复制</span>
+                                </button>
+                                <button type="button" class="import-method-card" data-method="url">
+                                    <i class="fas fa-link fa-lg"></i>
+                                    <span class="font-medium">论文 URL</span>
+                                    <span class="text-xs text-gray-500">ACM / IEEE / arXiv / DOI</span>
+                                </button>
+                                <button type="button" class="import-method-card" data-method="scholar">
+                                    <i class="fas fa-graduation-cap fa-lg"></i>
+                                    <span class="font-medium">Google Scholar</span>
+                                    <span class="text-xs text-gray-500">粘贴 Scholar 页面链接</span>
+                                </button>
+                            </div>
+                            <div id="import-input-area" class="mt-4" style="display:none;">
+                                <!-- 动态填充输入框 -->
+                            </div>
+                            <div id="import-error" class="mt-2 text-sm text-red-600" style="display:none;"></div>
+                            <div class="flex items-center justify-between mt-4">
+                                <a href="#" id="skip-import" class="text-sm text-gray-500 hover:text-gray-700">跳过，手动填写</a>
+                                <button type="button" id="parse-import-btn" class="btn-primary" style="display:none;">
+                                    <i class="fas fa-magic mr-2"></i>解析并填充
+                                </button>
+                            </div>
+                        </div>
+
                         <form id="publication-form" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div class="col-span-2">

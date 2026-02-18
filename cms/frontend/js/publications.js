@@ -59,6 +59,162 @@ document.getElementById('add-publication-btn')?.addEventListener('click', () => 
     openPublicationModal();
 });
 
+// ── 导入步骤逻辑 ──────────────────────────────────────────────
+
+let currentImportMethod = null;
+
+function resetImportStep() {
+    currentImportMethod = null;
+    const inputArea = document.getElementById('import-input-area');
+    const importError = document.getElementById('import-error');
+    const parseBtn = document.getElementById('parse-import-btn');
+
+    // 清除方法卡片选中状态
+    document.querySelectorAll('.import-method-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+
+    inputArea.style.display = 'none';
+    inputArea.innerHTML = '';
+    importError.style.display = 'none';
+    importError.textContent = '';
+    parseBtn.style.display = 'none';
+}
+
+function showImportStep() {
+    document.getElementById('import-step').style.display = '';
+    document.getElementById('publication-form').style.display = 'none';
+    // 也隐藏 modal-footer 的保存按钮，导入步骤有自己的按钮
+    document.querySelector('#publication-modal .modal-footer').style.display = 'none';
+}
+
+function showFormStep() {
+    document.getElementById('import-step').style.display = 'none';
+    document.getElementById('publication-form').style.display = '';
+    document.querySelector('#publication-modal .modal-footer').style.display = '';
+}
+
+function skipImport() {
+    showFormStep();
+}
+
+function selectImportMethod(method) {
+    currentImportMethod = method;
+    const inputArea = document.getElementById('import-input-area');
+    const parseBtn = document.getElementById('parse-import-btn');
+    const importError = document.getElementById('import-error');
+
+    // 更新卡片选中状态
+    document.querySelectorAll('.import-method-card').forEach(card => {
+        card.classList.toggle('selected', card.dataset.method === method);
+    });
+
+    importError.style.display = 'none';
+    parseBtn.style.display = '';
+
+    if (method === 'bibtex') {
+        inputArea.innerHTML = `
+            <label class="form-label">粘贴 BibTeX 条目</label>
+            <textarea id="import-input" class="form-input" rows="8"
+                placeholder="@inproceedings{key,
+  title = {Paper Title},
+  author = {Last, First and Last2, First2},
+  booktitle = {Conference Name},
+  year = {2024}
+}"></textarea>
+            <p class="text-xs text-gray-500 mt-1">提示：在 Google Scholar 点击论文下方的引号图标，选择 BibTeX 即可复制</p>
+        `;
+    } else if (method === 'url') {
+        inputArea.innerHTML = `
+            <label class="form-label">粘贴论文链接</label>
+            <input type="url" id="import-input" class="form-input"
+                placeholder="https://dl.acm.org/doi/10.1145/... 或 https://arxiv.org/abs/...">
+            <p class="text-xs text-gray-500 mt-1">支持：ACM DL、IEEE Xplore、arXiv、doi.org 等链接</p>
+        `;
+    } else if (method === 'scholar') {
+        inputArea.innerHTML = `
+            <label class="form-label">粘贴 Google Scholar 链接</label>
+            <input type="url" id="import-input" class="form-input"
+                placeholder="https://scholar.google.com/citations?view_op=view_citation&...">
+            <p class="text-xs text-gray-500 mt-1">提示：在 Scholar 论文页面复制浏览器地址栏链接</p>
+        `;
+    }
+    inputArea.style.display = '';
+}
+
+async function parseImport() {
+    if (!currentImportMethod) return;
+
+    const inputEl = document.getElementById('import-input');
+    const importError = document.getElementById('import-error');
+    const parseBtn = document.getElementById('parse-import-btn');
+    const inputValue = inputEl ? inputEl.value.trim() : '';
+
+    if (!inputValue) {
+        importError.textContent = '请输入内容';
+        importError.style.display = '';
+        return;
+    }
+
+    // 显示加载状态
+    parseBtn.disabled = true;
+    const originalHTML = parseBtn.innerHTML;
+    parseBtn.innerHTML = '<span class="spinner mr-2"></span>解析中...';
+    importError.style.display = 'none';
+
+    try {
+        const result = await apiRequest('/publications/import', {
+            method: 'POST',
+            body: JSON.stringify({
+                method: currentImportMethod,
+                input: inputValue,
+            }),
+        });
+
+        if (result.success && result.data) {
+            fillFormFromImport(result.data);
+            showFormStep();
+            showNotification('论文信息导入成功，请检查并补充', 'success');
+        } else {
+            importError.textContent = result.error || '解析失败，请检查输入';
+            importError.style.display = '';
+        }
+    } catch (error) {
+        importError.textContent = '请求失败: ' + error.message;
+        importError.style.display = '';
+    } finally {
+        parseBtn.disabled = false;
+        parseBtn.innerHTML = originalHTML;
+    }
+}
+
+function fillFormFromImport(data) {
+    const form = document.getElementById('publication-form');
+    if (data.title) form.title.value = data.title;
+    if (data.authors) form.authors.value = data.authors;
+    if (data.conference_short) form.conference_short.value = data.conference_short;
+    if (data.conference) form.conference.value = data.conference;
+    if (data.pdf) form.pdf.value = data.pdf;
+}
+
+// 导入步骤事件监听
+document.querySelectorAll('.import-method-card').forEach(card => {
+    card.addEventListener('click', () => {
+        selectImportMethod(card.dataset.method);
+    });
+});
+
+document.getElementById('skip-import')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    skipImport();
+});
+
+document.getElementById('parse-import-btn')?.addEventListener('click', () => {
+    parseImport();
+});
+
+// ── 模态框逻辑 ────────────────────────────────────────────────
+
 // 打开论文模态框
 function openPublicationModal(publication = null, index = null) {
     const modal = document.getElementById('publication-modal');
@@ -68,9 +224,10 @@ function openPublicationModal(publication = null, index = null) {
     // 重置表单
     form.reset();
     document.getElementById('image-preview').innerHTML = '';
+    resetImportStep();
 
     if (publication) {
-        // 编辑模式
+        // 编辑模式：直接显示表单，跳过导入步骤
         title.textContent = '编辑论文';
         document.getElementById('edit-index').value = index;
 
@@ -93,10 +250,13 @@ function openPublicationModal(publication = null, index = null) {
                 <img src="${publication.image}" alt="预览" class="w-32 h-32 object-cover rounded border">
             `;
         }
+
+        showFormStep();
     } else {
-        // 添加模式
+        // 添加模式：显示导入步骤
         title.textContent = '添加论文';
         document.getElementById('edit-index').value = '';
+        showImportStep();
     }
 
     modal.classList.add('active');

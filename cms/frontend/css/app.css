@@ -324,6 +324,42 @@ body {
     color: #9ca3af;
 }
 
+/* 论文导入方法选择 */
+.import-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+.import-method-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0.5rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: #374151;
+}
+.import-method-card:hover {
+    border-color: #93c5fd;
+    background-color: #eff6ff;
+}
+.import-method-card.selected {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+
+@media (max-width: 640px) {
+    .import-methods {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* 拖拽样式 */
 .dragging {
     opacity: 0.5;
