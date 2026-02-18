@@ -34,7 +34,8 @@ class MarkdownHandler:
 
         # 匹配章节标题（支持 # 或 ## 开头）
         # 注意: rf-string 中 {1,2} 会被 f-string 解析，必须写成 {{1,2}}
-        pattern = rf"^#{{1,2}}\s+{re.escape(section_name)}.*?$\n(.*?)(?=^#{{1,2}}\s+|\Z)"
+        # 遇到下一个标题、Liquid 标签 {% 或文件末尾时停止匹配
+        pattern = rf"^#{{1,2}}\s+{re.escape(section_name)}.*?$\n(.*?)(?=^#{{1,2}}\s+|^{{%|\Z)"
         match = re.search(pattern, content, re.MULTILINE | re.DOTALL)
 
         if match:
@@ -45,8 +46,8 @@ class MarkdownHandler:
         """更新指定章节的内容"""
         content = self.read_index()
 
-        # 匹配章节标题
-        pattern = rf"(^#{{1,2}}\s+{re.escape(section_name)}.*?$\n)(.*?)(?=^#{{1,2}}\s+|\Z)"
+        # 匹配章节标题，遇到下一个标题、Liquid 标签 {% 或文件末尾时停止
+        pattern = rf"(^#{{1,2}}\s+{re.escape(section_name)}.*?$\n)(.*?)(?=^#{{1,2}}\s+|^{{%|\Z)"
 
         def replace_func(match):
             return match.group(1) + new_content.strip() + "\n\n"
