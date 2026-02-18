@@ -28,6 +28,13 @@ function renderProfile() {
     document.getElementById('profile-github').value = config.github_link || '';
     document.getElementById('profile-linkedin').value = config.linkedin || '';
 
+    // CV 文件
+    const cvLink = config.cv_link || '';
+    const cvDisplay = document.getElementById('cv-current-file');
+    if (cvDisplay) {
+        cvDisplay.textContent = cvLink ? cvLink.split('/').pop() : '未设置';
+    }
+
     // About Me 和 Research Interests
     document.getElementById('profile-about').value = about;
     document.getElementById('profile-research').value = research;
@@ -89,6 +96,53 @@ document.getElementById('save-profile-btn')?.addEventListener('click', async () 
         showNotification('个人信息保存成功', 'success');
     } catch (error) {
         showNotification('保存失败: ' + error.message, 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+});
+
+// 上传 CV
+document.getElementById('upload-cv-btn')?.addEventListener('click', async () => {
+    const fileInput = document.getElementById('cv-upload');
+    const btn = document.getElementById('upload-cv-btn');
+    const status = document.getElementById('cv-upload-status');
+
+    if (!fileInput.files || fileInput.files.length === 0) {
+        showNotification('请先选择 PDF 文件', 'error');
+        return;
+    }
+
+    const file = fileInput.files[0];
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+        showNotification('请上传 PDF 格式的文件', 'error');
+        return;
+    }
+
+    const originalText = btn.innerHTML;
+    try {
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>上传中...';
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const result = await apiRequest('/profile/upload-cv', {
+            method: 'POST',
+            body: formData,
+        });
+
+        // 更新显示
+        document.getElementById('cv-current-file').textContent = file.name;
+        fileInput.value = '';
+
+        status.textContent = `上传成功：${result.path}`;
+        status.style.display = 'block';
+        setTimeout(() => { status.style.display = 'none'; }, 3000);
+
+        showNotification('CV 上传成功', 'success');
+    } catch (error) {
+        showNotification('CV 上传失败: ' + error.message, 'error');
     } finally {
         btn.disabled = false;
         btn.innerHTML = originalText;

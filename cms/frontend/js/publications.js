@@ -258,8 +258,13 @@ function openPublicationModal(publication = null, index = null) {
 
     // 重置表单
     form.reset();
+    // 显式清空隐藏字段（form.reset() 对 hidden input 不可靠）
+    form.image.value = '';
+    form.bibtex.value = '';
+    document.getElementById('image-upload').value = '';
     document.getElementById('image-preview').innerHTML = '';
     document.getElementById('bibtex-text').value = '';
+    document.getElementById('bibtex-upload').value = '';
     document.getElementById('bibtex-status').style.display = 'none';
     // 重置 BibTeX 模式到"粘贴"
     document.querySelectorAll('.bibtex-tab').forEach(t => t.classList.remove('active'));
@@ -288,9 +293,7 @@ function openPublicationModal(publication = null, index = null) {
 
         // 显示图片预览
         if (publication.image) {
-            document.getElementById('image-preview').innerHTML = `
-                <img src="${publication.image}" alt="预览" class="w-32 h-32 object-cover rounded border">
-            `;
+            showImagePreview(publication.image);
         }
 
         showFormStep();
@@ -403,6 +406,26 @@ async function deletePublication(index) {
     }
 }
 
+// 显示图片预览（带删除按钮）
+function showImagePreview(imagePath) {
+    document.getElementById('image-preview').innerHTML = `
+        <div class="flex items-center gap-2 mt-1">
+            <img src="${imagePath}" alt="预览" class="w-32 h-32 object-cover rounded border">
+            <button type="button" onclick="removeImage()" class="text-red-500 hover:text-red-700 text-sm" title="删除图片">
+                <i class="fas fa-trash mr-1"></i>删除图片
+            </button>
+        </div>
+    `;
+}
+
+// 删除已上传的图片
+function removeImage() {
+    const form = document.getElementById('publication-form');
+    form.image.value = '';
+    document.getElementById('image-upload').value = '';
+    document.getElementById('image-preview').innerHTML = '';
+}
+
 // 上传图片
 document.getElementById('image-upload')?.addEventListener('change', async (e) => {
     const file = e.target.files[0];
@@ -411,12 +434,7 @@ document.getElementById('image-upload')?.addEventListener('change', async (e) =>
     try {
         const result = await uploadFile(file, '/publications/upload-image');
         document.querySelector('input[name="image"]').value = result.path;
-
-        // 显示预览
-        document.getElementById('image-preview').innerHTML = `
-            <img src="${result.path}" alt="预览" class="w-32 h-32 object-cover rounded border">
-        `;
-
+        showImagePreview(result.path);
         showNotification('图片上传成功', 'success');
     } catch (error) {
         showNotification('图片上传失败: ' + error.message, 'error');

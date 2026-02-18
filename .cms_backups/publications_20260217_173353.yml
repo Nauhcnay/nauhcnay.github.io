@@ -1,33 +1,19 @@
 main:
-- title: Enhancing 6D Pose Estimation with Cross-modal Fusion Network and Density-peak
-    Keypoint Localization
-  authors: Liming Zhang, Qing Li, Zhenhong Chen, Chuan Yan, Xiaojiang Peng
-  conference_short: IIICASSP 2025
-  conference: ICASSP 2025 - 2025 IEEE International Conference on Acoustics, Speech
-    and Signal Processing (ICASSP)
-  pdf: https://doi.org/10.1109/ICASSP49660.2025.10890042
-  bibtex: ./assets/bib/Enhancing_6D_Pose_Estimation_with_Cross_modal_Fusi.bib
-  image: ./assets/img/publication_20260217_175145.png
-  featured: false
-  order: 0
-- title: Global Attention-Guided Dual-Domain Point Cloud Feature Learning for Classification
-    and Segmentation
-  authors: Zihao Li, Pan Gao, Kang You, Chuan Yan, Manoranjan Paul
-  conference_short: ITAI 2024
-  conference: IEEE Transactions on Artificial Intelligence
-  pdf: https://doi.org/10.1109/TAI.2024.3429050
-  bibtex: ./assets/bib/Global_Attention_Guided_Dual_Domain_Point_Cloud_Fe.bib
-  image: ./assets/img/publication_20260217_174830.png
-  featured: false
-  order: 0
-- title: 'SmokeSAM: Vehicle Black Smoke Segmentation Based on SAM and LoRA Fine-Tuning'
-  authors: Zeyu Dong, Qing Li, Chuan Yan, Xiaojiang Peng
-  conference_short: ICML 2025
-  conference: 2025 6th International Conference on Machine Learning and Computer Application
-    (ICMLCA)
-  pdf: https://doi.org/10.1109/ICMLCA66850.2025.11336530
-  bibtex: ./assets/bib/SmokeSAM_Vehicle_Black_Smoke_Segmentation_Based_on.bib
-  image: ./assets/img/publication_20260217_174130.png
+- title: http://jtd.amegroups.com/article/view/7577/7006 http://jtd.amegroups.com/article/view/7521/7007
+    http://jtd.amegroups.com/article/view/7499/7008 http://jtd.amegroups.com/article/view/7520/7009
+    http://jtd.amegroups.com/article/view/7094/7010 http://jtd.amegroups.com/article/view/7603/7011
+    http://jtd.amegroups.com/article/view/7490/7012 http://jtd.amegroups.com/article/view/7243/7013
+    http://jtd.amegroups.com/article/view/7045/7014 http://jtd.amegroups.com/article/view/7224/7015
+    http://jtd.amegroups.com/article/view/7341/7016 http://jtd.amegroups.com/article/view/7524/7017
+    http://jtd.amegroups.com/article/view/7526/7018 http://jtd.amegroups.com/article/view/7495/7019
+    http://jtd.amegroups.com/article/view/7518/7020 http://jtd.amegroups.com/article/view/7582/7021
+    http://jtd.amegroups.com/article/view/7643/7022 http://jtd.amegroups.com/article/view/7494/7023
+    http://jtd.amegroups.com/article/view/7447/7024
+  authors: Sai-Bo Pan, Jian-Bin Zhang, Bai-Qin Zhao, Ying Chai
+  conference_short: JTD 2016
+  conference: Journal of Thoracic Disease
+  pdf: https://doi.org/10.21037/jtd.2016.04.14
+  image: ./assets/img/publication_20260217_165006.jpg
   featured: false
   order: 0
 - title: Generating Past and Future in Digital Painting Processes

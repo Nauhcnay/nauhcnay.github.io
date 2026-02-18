@@ -105,10 +105,55 @@
 
       </section>
       <footer>
-        
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <p class="visitor-stats">
+          <span id="busuanzi_container_site_pv">
+            Total visits: <span id="busuanzi_value_site_pv"></span>
+          </span>
+          &nbsp;|&nbsp;
+          <span id="busuanzi_container_site_uv">
+            Unique visitors: <span id="busuanzi_value_site_uv"></span>
+          </span>
+        </p>
       </footer>
     </div>
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
+    <script>
+    document.addEventListener('click', function(e) {
+      var toggle = e.target.closest('.bibtex-toggle');
+      if (!toggle) return;
+      e.preventDefault();
+      var panel = toggle.closest('.col-sm-9').querySelector('.bibtex-panel');
+      if (!panel) return;
+
+      // Toggle visibility
+      if (panel.style.display === 'none') {
+        panel.style.display = '';
+        // Fetch content on first open
+        var pre = panel.querySelector('.bibtex-content');
+        if (pre.textContent === 'Loading...') {
+          fetch(toggle.getAttribute('data-bibtex-url'))
+            .then(function(r) { return r.text(); })
+            .then(function(text) { pre.textContent = text; })
+            .catch(function() { pre.textContent = 'Failed to load BibTeX.'; });
+        }
+      } else {
+        panel.style.display = 'none';
+      }
+    });
+
+    // Copy button
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.bibtex-copy-btn');
+      if (!btn) return;
+      var text = btn.closest('.bibtex-panel').querySelector('.bibtex-content').textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        var orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(function() { btn.textContent = orig; }, 1500);
+      });
+    });
+    </script>
     {% if site.google_analytics %}
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
