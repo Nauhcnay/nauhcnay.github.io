@@ -304,6 +304,23 @@
                         </div>
                     </div>
 
+                    <!-- CV 上传 -->
+                    <div class="border-b pb-4">
+                        <h3 class="text-lg font-semibold mb-4">简历 (CV)</h3>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-600 mb-2">
+                                    当前文件：<span id="cv-current-file" class="font-medium text-gray-800">加载中...</span>
+                                </p>
+                                <input type="file" id="cv-upload" accept=".pdf" class="form-input">
+                            </div>
+                            <button type="button" id="upload-cv-btn" class="btn-primary self-end">
+                                <i class="fas fa-upload mr-2"></i>上传 CV
+                            </button>
+                        </div>
+                        <p id="cv-upload-status" class="text-xs text-green-600 mt-2" style="display:none;"></p>
+                    </div>
+
                     <!-- About Me -->
                     <div class="border-b pb-4">
                         <h3 class="text-lg font-semibold mb-4">About Me</h3>
