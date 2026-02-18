@@ -4,12 +4,12 @@ layout: homepage
 
 ## About Me
 
-I am a PhD student of Creativity and Graphics Lab (CraGL) at George Mason University, under the supervision of [Yotam Gingold](https://cragl.cs.gmu.edu/). I obtained my Bachelor’s in Communication Technology from [Southwest Jiaotong University](https://en.swjtu.edu.cn/).
+I am a Postdoctoral Researcher at Stanford University, working with [Maneesh Agrawala](https://graphics.stanford.edu/~maneesh/) in the [Brown Institute for Media Innovation](https://brown.stanford.edu/). My research focuses on human vision, human-AI collaboration, and creative design. I obtained my Ph.D. from George Mason University, advised by [Yotam Gingold](https://cragl.cs.gmu.edu/), and my Bachelor's in Communication Technology from [Southwest Jiaotong University](https://en.swjtu.edu.cn/).
 
 ## Research Interests
-- **Computer Graphics:** Sketch cleanup, Sketch vectorization, Vector graphics
-- **Computer Vision:** Sketch flatting, Sketch shading, Image generation, Differentiable rendering
-- **Human-Computer Interaction:** AI-assitant professional digital painting
+- **Human Vision:** Visual perception, perceptual studies for graphics and design
+- **Human-AI Collaboration:** AI-assisted creative tools, interactive systems for professionals
+- **Creative Design:** Sketch processing, vector graphics, digital illustration
 
 ## News
 
