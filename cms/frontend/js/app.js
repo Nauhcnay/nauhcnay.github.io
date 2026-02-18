@@ -142,18 +142,28 @@ async function loadGitStatus() {
 // 同步到 Git
 async function syncToGit() {
     const btn = document.getElementById('sync-btn');
+    const deployCheckbox = document.getElementById('deploy-checkbox');
+    const deploy = deployCheckbox?.checked || false;
     const originalText = btn.innerHTML;
 
     try {
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>同步中...';
+        btn.innerHTML = deploy
+            ? '<i class="fas fa-spinner fa-spin mr-2"></i>部署中...'
+            : '<i class="fas fa-spinner fa-spin mr-2"></i>同步中...';
 
-        const result = await apiRequest('/git/auto-commit', {
+        const url = deploy ? '/git/auto-commit?deploy=true' : '/git/auto-commit';
+        const result = await apiRequest(url, {
             method: 'POST',
         });
 
         if (result.success) {
-            showNotification('成功提交并推送到远程仓库', 'success');
+            if (result.deployed) {
+                showNotification('已提交并部署到 main 分支，网站将自动更新', 'success');
+            } else {
+                showNotification('成功提交并推送到远程仓库', 'success');
+            }
+            if (deployCheckbox) deployCheckbox.checked = false;
             await loadGitStatus();
         } else {
             showNotification(result.error || '同步失败', 'error');

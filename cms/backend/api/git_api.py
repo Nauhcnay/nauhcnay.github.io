@@ -85,10 +85,10 @@ async def pull_changes(branch: str = None):
 
 
 @router.post("/auto-commit")
-async def auto_commit(message: str = None):
-    """自动提交并推送"""
+async def auto_commit(message: str = None, deploy: bool = False):
+    """自动提交并推送，deploy=True 时合并到 main 并推送"""
     try:
-        result = git_handler.auto_commit_and_push(message=message)
+        result = git_handler.auto_commit_and_push(message=message, deploy=deploy)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

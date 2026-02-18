@@ -131,8 +131,13 @@ class GitHandler:
                 "error": str(e)
             }
 
-    def auto_commit_and_push(self, message: str = None) -> Dict[str, Any]:
-        """自动提交并推送（便捷方法）"""
+    def auto_commit_and_push(self, message: str = None, deploy: bool = False) -> Dict[str, Any]:
+        """自动提交并推送（便捷方法）
+
+        Args:
+            message: 提交信息
+            deploy: 是否合并到 main 分支并推送（部署）
+        """
         if not self.repo.is_dirty() and not self.repo.untracked_files:
             return {
                 "success": False,
@@ -147,18 +152,35 @@ class GitHandler:
             message = f"Update content via CMS ({modified} modified, {untracked} new)"
 
         try:
+            dev_branch = self.repo.active_branch.name
+
             # 提交
             commit_sha = self.commit(message)
 
-            # 推送
+            # 推送当前分支
             push_result = self.push()
 
-            return {
+            result = {
                 "success": True,
                 "commit": commit_sha[:7],
                 "message": message,
-                "push": push_result
+                "push": push_result,
+                "deployed": False,
             }
+
+            # 如果需要部署到 main
+            if deploy and dev_branch != "main":
+                self.repo.git.checkout("main")
+                try:
+                    self.repo.git.merge(dev_branch)
+                    main_push = self.push(branch="main")
+                    result["deployed"] = True
+                    result["deploy_push"] = main_push
+                finally:
+                    # 无论成功失败都切回开发分支
+                    self.repo.git.checkout(dev_branch)
+
+            return result
         except Exception as e:
             return {
                 "success": False,
