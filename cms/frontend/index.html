@@ -67,6 +67,9 @@
                     <button class="tab-btn" data-tab="profile">
                         <i class="fas fa-user mr-2"></i>个人信息
                     </button>
+                    <button class="tab-btn" data-tab="analytics">
+                        <i class="fas fa-chart-line mr-2"></i>数据分析
+                    </button>
                     <button class="tab-btn" data-tab="git">
                         <i class="fas fa-code-branch mr-2"></i>Git 管理
                     </button>
@@ -360,6 +363,62 @@
             </div>
         </div>
 
+        <!-- 数据分析 Tab -->
+        <div id="analytics-tab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">数据分析</h2>
+                    <button onclick="loadAnalytics()" class="btn-secondary">
+                        <i class="fas fa-sync-alt mr-2"></i>刷新数据
+                    </button>
+                </div>
+
+                <!-- 总览卡片 -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-blue-50 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-blue-700" id="stat-total-views">-</div>
+                        <div class="text-sm text-blue-600">总浏览量（14天）</div>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-green-700" id="stat-unique-visitors">-</div>
+                        <div class="text-sm text-green-600">独立访客（14天）</div>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-purple-700" id="stat-total-clones">-</div>
+                        <div class="text-sm text-purple-600">仓库克隆（14天）</div>
+                    </div>
+                    <div class="bg-orange-50 rounded-lg p-4 text-center">
+                        <div class="text-2xl font-bold text-orange-700" id="stat-unique-cloners">-</div>
+                        <div class="text-sm text-orange-600">独立克隆者（14天）</div>
+                    </div>
+                </div>
+
+                <!-- 浏览量折线图 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">每日浏览量</h3>
+                    <div class="bg-gray-50 rounded-lg p-4" style="height: 300px;">
+                        <canvas id="views-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- 来源 + 热门页面 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">流量来源</h3>
+                        <div id="referrers-list" class="space-y-2">
+                            <div class="text-gray-500 text-sm">加载中...</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">热门页面</h3>
+                        <div id="popular-paths-list" class="space-y-2">
+                            <div class="text-gray-500 text-sm">加载中...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Git 管理 Tab -->
         <div id="git-tab" class="tab-content">
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -412,6 +471,9 @@
     <!-- 通知容器 -->
     <div id="notification-container" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
 
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
     <!-- JavaScript -->
     <script src="./js/app.js"></script>
     <script src="./js/publications.js"></script>
@@ -419,5 +481,6 @@
     <script src="./js/profile.js"></script>
     <script src="./js/git.js"></script>
     <script src="./js/preview.js"></script>
+    <script src="./js/analytics.js"></script>
 </body>
 </html>

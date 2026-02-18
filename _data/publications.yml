@@ -1,4 +1,14 @@
 main:
+- title: Graph Attentive Dual Ensemble learning for Unsupervised Domain Adaptation
+    on point clouds
+  authors: Qing Li*, <strong>Chuan Yan</strong>, Qi Hao, Xiaojiang Peng, Li Liu
+  conference_short: PR 2024
+  conference: Pattern Recognition
+  pdf: https://doi.org/https://doi.org/10.1016/j.patcog.2024.110690
+  bibtex: ./assets/bib/Graph_Attentive_Dual_Ensemble_learning_for_Unsuper.bib
+  image: ./assets/img/publication_20260217_214519.png
+  featured: false
+  order: 0
 - title: Self-ensembling for 3D point cloud domain adaptation
   authors: Qing Li*, Xiaojiang Peng, <strong>Chuan Yan</strong>, Pan Gao, Qi Hao
   conference_short: IVC 2025

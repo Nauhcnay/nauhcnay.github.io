@@ -3,5 +3,6 @@ from .news import router as news_router
 from .profile import router as profile_router
 from .git_api import router as git_router
 from .preview import router as preview_router
+from .analytics import router as analytics_router
 
-__all__ = ["publications_router", "news_router", "profile_router", "git_router", "preview_router"]
+__all__ = ["publications_router", "news_router", "profile_router", "git_router", "preview_router", "analytics_router"]

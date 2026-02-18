@@ -83,6 +83,9 @@ async function loadTabData(tabName) {
         case 'profile':
             await loadProfile();
             break;
+        case 'analytics':
+            await loadAnalytics();
+            break;
         case 'git':
             await loadGitInfo();
             break;
