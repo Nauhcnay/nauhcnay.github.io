@@ -1,0 +1,29 @@
+{
+  "cms": {
+    "name": "Personal Homepage CMS",
+    "version": "1.0.0",
+    "host": "0.0.0.0",
+    "port": 8000
+  },
+  "repository": {
+    "root": "..",
+    "data_dir": "_data",
+    "assets_dir": "assets",
+    "backup_dir": ".cms_backups"
+  },
+  "features": {
+    "auto_backup": true,
+    "max_backups": 10,
+    "auto_commit": false,
+    "auto_push": false
+  },
+  "scholar": {
+    "enabled": false,
+    "api_key": ""
+  },
+  "overleaf": {
+    "enabled": false,
+    "watch_path": "",
+    "cv_filename": "ChuanYan_CV_Ind.pdf"
+  }
+}

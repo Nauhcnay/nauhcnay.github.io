@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Homepage CMS</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/app.css">
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SortableJS for drag-and-drop reordering -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航栏 -->
+    <nav class="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-bold text-gray-900">
+                        <i class="fas fa-cog mr-2"></i>Personal Homepage CMS
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <!-- Git 状态 -->
+                    <div id="git-status" class="text-sm text-gray-600">
+                        <i class="fas fa-code-branch mr-1"></i>
+                        <span id="branch-name">-</span>
+                    </div>
+                    <!-- 预览按钮 -->
+                    <div class="flex items-center space-x-1">
+                        <button id="preview-btn" class="btn-secondary" title="启动 Jekyll 本地预览">
+                            <i class="fas fa-eye mr-2"></i>预览
+                        </button>
+                        <button id="preview-stop-btn" class="btn-danger" title="停止预览" style="display:none;">
+                            <i class="fas fa-stop"></i>
+                        </button>
+                    </div>
+                    <!-- 同步按钮 -->
+                    <div class="flex items-center space-x-2">
+                        <label class="flex items-center text-sm text-gray-600 cursor-pointer" title="勾选后将合并到 main 分支并推送，更新网站">
+                            <input type="checkbox" id="deploy-checkbox" class="mr-1">
+                            部署
+                        </label>
+                        <button id="sync-btn" class="btn-primary">
+                            <i class="fas fa-sync-alt mr-2"></i>提交并推送
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Tab 导航 -->
+        <div class="mb-6">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8">
+                    <button class="tab-btn active" data-tab="publications">
+                        <i class="fas fa-file-alt mr-2"></i>论文管理
+                    </button>
+                    <button class="tab-btn" data-tab="news">
+                        <i class="fas fa-newspaper mr-2"></i>新闻动态
+                    </button>
+                    <button class="tab-btn" data-tab="profile">
+                        <i class="fas fa-user mr-2"></i>个人信息
+                    </button>
+                    <button class="tab-btn" data-tab="git">
+                        <i class="fas fa-code-branch mr-2"></i>Git 管理
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- 论文管理 Tab -->
+        <div id="publications-tab" class="tab-content active">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">论文管理</h2>
+                    <button id="add-publication-btn" class="btn-primary">
+                        <i class="fas fa-plus mr-2"></i>添加论文
+                    </button>
+                </div>
+
+                <!-- 论文列表 -->
+                <div id="publications-list" class="space-y-4">
+                    <!-- 动态加载 -->
+                </div>
+            </div>
+
+            <!-- 添加/编辑论文模态框 -->
+            <div id="publication-modal" class="modal">
+                <div class="modal-content max-w-3xl">
+                    <div class="modal-header">
+                        <h3 class="text-xl font-bold" id="modal-title">添加论文</h3>
+                        <button class="modal-close" onclick="closePublicationModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 导入步骤（仅添加模式显示） -->
+                        <div id="import-step">
+                            <p class="text-sm text-gray-600 mb-4">选择导入方式快速填充表单，或跳过手动填写。</p>
+                            <div class="import-methods">
+                                <button type="button" class="import-method-card" data-method="bibtex">
+                                    <i class="fas fa-code fa-lg"></i>
+                                    <span class="font-medium">粘贴 BibTeX</span>
+                                    <span class="text-xs text-gray-500">从 Google Scholar 复制</span>
+                                </button>
+                                <button type="button" class="import-method-card" data-method="url">
+                                    <i class="fas fa-link fa-lg"></i>
+                                    <span class="font-medium">论文 URL</span>
+                                    <span class="text-xs text-gray-500">ACM / IEEE / arXiv / DOI</span>
+                                </button>
+                                <button type="button" class="import-method-card" data-method="scholar">
+                                    <i class="fas fa-graduation-cap fa-lg"></i>
+                                    <span class="font-medium">Google Scholar</span>
+                                    <span class="text-xs text-gray-500">粘贴 Scholar 页面链接</span>
+                                </button>
+                            </div>
+                            <div id="import-input-area" class="mt-4" style="display:none;">
+                                <!-- 动态填充输入框 -->
+                            </div>
+                            <div id="import-error" class="mt-2 text-sm text-red-600" style="display:none;"></div>
+                            <div class="flex items-center justify-between mt-4">
+                                <a href="#" id="skip-import" class="text-sm text-gray-500 hover:text-gray-700">跳过，手动填写</a>
+                                <button type="button" id="parse-import-btn" class="btn-primary" style="display:none;">
+                                    <i class="fas fa-magic mr-2"></i>解析并填充
+                                </button>
+                            </div>
+                        </div>
+
+                        <form id="publication-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="col-span-2">
+                                    <label class="form-label">论文标题 *</label>
+                                    <input type="text" name="title" class="form-input" required>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="form-label">作者 *</label>
+                                    <input type="text" name="authors" class="form-input" placeholder="Author1, Author2, Author3" required>
+                                </div>
+                                <div>
+                                    <label class="form-label">会议简称 *</label>
+                                    <input type="text" name="conference_short" class="form-input" placeholder="UIST 2024" required>
+                                </div>
+                                <div>
+                                    <label class="form-label">完整会议名 *</label>
+                                    <input type="text" name="conference" class="form-input" placeholder="ACM Symposium on..." required>
+                                </div>
+                                <div>
+                                    <label class="form-label">PDF 链接</label>
+                                    <input type="url" name="pdf" class="form-input" placeholder="https://...">
+                                </div>
+                                <div>
+                                    <label class="form-label">代码链接</label>
+                                    <input type="url" name="code" class="form-input" placeholder="https://github.com/...">
+                                </div>
+                                <div>
+                                    <label class="form-label">项目页面</label>
+                                    <input type="url" name="page" class="form-input" placeholder="https://...">
+                                </div>
+                                <div>
+                                    <label class="form-label">备注</label>
+                                    <input type="text" name="notes" class="form-input" placeholder="Oral, Best Paper, etc.">
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="form-label">缩略图</label>
+                                    <input type="file" id="image-upload" accept="image/*" class="form-input">
+                                    <input type="hidden" name="image">
+                                    <div id="image-preview" class="mt-2"></div>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="form-label">BibTeX</label>
+                                    <div class="bibtex-mode-tabs">
+                                        <button type="button" class="bibtex-tab active" data-bibtex-mode="paste">粘贴文本</button>
+                                        <button type="button" class="bibtex-tab" data-bibtex-mode="upload">上传文件</button>
+                                    </div>
+                                    <div id="bibtex-paste-area">
+                                        <textarea id="bibtex-text" class="form-input" rows="4" placeholder="@inproceedings{key, title={...}, ...}"></textarea>
+                                    </div>
+                                    <div id="bibtex-upload-area" style="display:none;">
+                                        <input type="file" id="bibtex-upload" accept=".bib" class="form-input">
+                                    </div>
+                                    <input type="hidden" name="bibtex">
+                                    <p id="bibtex-status" class="text-xs text-green-600 mt-1" style="display:none;"></p>
+                                </div>
+                                <div class="col-span-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="featured" class="mr-2">
+                                        <span class="text-sm font-medium text-gray-700">精选论文（Featured）</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <input type="hidden" name="index" id="edit-index">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="closePublicationModal()">取消</button>
+                        <button type="button" class="btn-primary" onclick="savePublication()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 新闻动态 Tab -->
+        <div id="news-tab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">新闻动态</h2>
+                    <button id="add-news-btn" class="btn-primary">
+                        <i class="fas fa-plus mr-2"></i>添加新闻
+                    </button>
+                </div>
+
+                <!-- 新闻列表 -->
+                <div id="news-list" class="space-y-4">
+                    <!-- 动态加载 -->
+                </div>
+            </div>
+
+            <!-- 添加/编辑新闻模态框 -->
+            <div id="news-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="text-xl font-bold" id="news-modal-title">添加新闻</h3>
+                        <button class="modal-close" onclick="closeNewsModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="news-form" class="space-y-4">
+                            <div>
+                                <label class="form-label">日期 * <span class="text-sm text-gray-500">(选择月份或输入完整日期)</span></label>
+                                <input type="month" name="date" class="form-input" required>
+                                <p class="text-xs text-gray-500 mt-1">格式示例：2024-10 或手动输入 2024-10-15</p>
+                            </div>
+                            <div>
+                                <label class="form-label">内容 * (支持 Markdown)</label>
+                                <textarea name="content" class="form-input" rows="4" required placeholder="例如：Our paper **Title** was accepted to Conference 2024!"></textarea>
+                            </div>
+                            <input type="hidden" name="index" id="news-edit-index">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="closeNewsModal()">取消</button>
+                        <button type="button" class="btn-primary" onclick="saveNews()">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 个人信息 Tab -->
+        <div id="profile-tab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">个人信息</h2>
+
+                <div class="space-y-6">
+                    <!-- 基本信息 -->
+                    <div class="border-b pb-4">
+                        <h3 class="text-lg font-semibold mb-4">基本信息</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">姓名</label>
+                                <input type="text" id="profile-title" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">职位</label>
+                                <input type="text" id="profile-position" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">机构</label>
+                                <input type="text" id="profile-affiliation" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">邮箱</label>
+                                <input type="email" id="profile-email" class="form-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 社交链接 -->
+                    <div class="border-b pb-4">
+                        <h3 class="text-lg font-semibold mb-4">社交链接</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label">Google Scholar</label>
+                                <input type="url" id="profile-scholar" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">GitHub</label>
+                                <input type="url" id="profile-github" class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">LinkedIn</label>
+                                <input type="url" id="profile-linkedin" class="form-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- About Me -->
+                    <div class="border-b pb-4">
+                        <h3 class="text-lg font-semibold mb-4">About Me</h3>
+                        <textarea id="profile-about" class="form-input" rows="6"></textarea>
+                    </div>
+
+                    <!-- 研究兴趣 -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-4">Research Interests</h3>
+                        <textarea id="profile-research" class="form-input" rows="4"></textarea>
+                    </div>
+
+                    <button id="save-profile-btn" class="btn-primary">
+                        <i class="fas fa-save mr-2"></i>保存个人信息
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Git 管理 Tab -->
+        <div id="git-tab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Git 管理</h2>
+
+                <!-- Git 状态 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">仓库状态</h3>
+                    <div id="git-detailed-status" class="bg-gray-50 rounded p-4">
+                        <!-- 动态加载 -->
+                    </div>
+                </div>
+
+                <!-- Diff 预览 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">更改预览</h3>
+                    <pre id="git-diff" class="bg-gray-900 text-gray-100 rounded p-4 overflow-x-auto text-sm"></pre>
+                </div>
+
+                <!-- 提交操作 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-4">提交更改</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="form-label">提交信息</label>
+                            <textarea id="commit-message" class="form-input" rows="3" placeholder="描述你的更改..."></textarea>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button id="commit-btn" class="btn-primary">
+                                <i class="fas fa-check mr-2"></i>提交
+                            </button>
+                            <button id="commit-push-btn" class="btn-primary">
+                                <i class="fas fa-upload mr-2"></i>提交并推送
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 最近提交 -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">最近提交</h3>
+                    <div id="recent-commits" class="space-y-2">
+                        <!-- 动态加载 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知容器 -->
+    <div id="notification-container" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+    <!-- JavaScript -->
+    <script src="./js/app.js"></script>
+    <script src="./js/publications.js"></script>
+    <script src="./js/news.js"></script>
+    <script src="./js/profile.js"></script>
+    <script src="./js/git.js"></script>
+    <script src="./js/preview.js"></script>
+</body>
+</html>

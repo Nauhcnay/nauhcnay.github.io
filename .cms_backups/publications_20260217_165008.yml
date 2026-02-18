@@ -1,16 +1,4 @@
 main:
-- title: Generating Past and Future in Digital Painting Processes
-  authors: Lvmin Zhang, <strong>Chuan Yan*</strong>, Yuwei Guo, Jinbo Xing, Maneesh
-    Agrawala
-  conference_short: SIGGAPH 2025
-  conference: ACM Transactions on Graphics
-  pdf: https://doi.org/10.1145/3731160
-  code: https://github.com/lllyasviel/Paints-UNDO
-  page: https://lllyasviel.github.io/paints_alter_web/
-  bibtex: ./assets/bib/Instance_Segmentation_of_Scene_Sketches_Using_Natu.bib
-  image: ./assets/img/publication_20260217_165006.jpg
-  featured: true
-  order: 0
 - title: Instance Segmentation of Scene Sketches Using Natural Image Priors
   authors: Mia Tang, Yael Vinker, <strong>Chuan Yan*</strong>, Lvmin Zhang, Maneesh
     Agrawala
