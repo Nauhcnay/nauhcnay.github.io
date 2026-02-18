@@ -13,6 +13,10 @@ I am a Postdoctoral Researcher at Stanford University, working with [Maneesh Agr
 
 ## News
 
+- **[Feb. 2025]** Our paper [Instance Segmentation of Scene Sketches Using Natural Image Priors](https://inklayer.github.io/) was accepted to [SIGGRAPH 2025](https://s2025.siggraph.org/). This is a collaboration with [Mia Tang](https://www.mia-tang.com/), [Yael Vinker](https://yael-vinker.github.io/website/), [Lvmin Zhang](https://lllyasviel.github.io/lvmin_zhang/) and [Maneesh Agrawala](https://graphics.stanford.edu/~maneesh/).
+
+- **[Feb. 2025]** Our paper [Generating Past and Future in Digital Painting Processes](https://lllyasviel.github.io/paints_alter_web/) was accepted to [SIGGRAPH 2025](https://s2025.siggraph.org/) and will appear in a special issue of [TOG](https://dl.acm.org/journal/tog). This is a collaboration with [Lvmin Zhang](https://lllyasviel.github.io/lvmin_zhang/), [Yuwei Guo](https://guoyww.github.io/), [Jinbo Xing](https://doubiiu.github.io/) and [Maneesh Agrawala](https://graphics.stanford.edu/~maneesh/).
+
 - **[Aug. 2024]** I joined Prof. [Maneesh Agrawala](https://graphics.stanford.edu/~maneesh/)'s group as a Post-doc.
 
 - **[Aug. 2024]** Passed my final defense on August 7, 2024, now I'm Dr. Yan! o(\*￣▽￣\*)ブ
