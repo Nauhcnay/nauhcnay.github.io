@@ -1,176 +1,173 @@
-# The Minimal Light Theme
+# Personal Academic Homepage
 
-[![LICENSE](https://img.shields.io/github/license/yaoyao-liu/minimal-light?style=flat-square&logo=creative-commons&color=EF9421)](https://github.com/yaoyao-liu/minimal-light/blob/main/LICENSE)
+A Jekyll-based academic personal homepage with a built-in CMS (Content Management System) for managing publications, news, profile, and analytics.
 
-\[[Demo the theme](https://minimal-light-theme.yliu.me/)\]  \[[简体中文](https://github.com/yaoyao-liu/minimal-light/blob/master/README_zh_Hans.md) | [繁體中文](https://github.com/yaoyao-liu/minimal-light/blob/master/README_zh_Hant.md) | [Deutsche](https://github.com/yaoyao-liu/minimal-light/blob/master/README_de.md)\]
- 
-*This is the source code of my homepage. I build this website based on [minimal](https://github.com/orderedlist/minimal).*
-<br>
-*Feel free to use and share the source code anywhere you like.*
-
-The latest version of my homepage is available here: [[link](https://github.com/yaoyao-liu/yaoyao-liu.github.io)]
-<br>
-A template for Max Planck Institute for Informatics is available here: [[link](https://github.com/yaoyao-liu/minimal-light-theme-mpi-inf)]
+Based on the [Minimal Light](https://github.com/yaoyao-liu/minimal-light) theme.
 
 ## Features
 
-- Simple and elegant personal homepage theme
+- Simple and elegant academic homepage
 - Jekyll theme, automatically deployed by GitHub Pages
-- Basic search engine optimization
-- Mobile friendly
-- Supporting Markdown 
+- **Built-in CMS** with web-based admin interface
+  - Publication management (add, edit, reorder, import from BibTeX/URL)
+  - News/updates management
+  - Profile editing (about, research interests, services, social links, CV upload)
+  - Git integration (commit & push from the browser)
+  - Analytics dashboard (GitHub Traffic API, 14-day views/clones chart)
+  - Jekyll local preview
+- Supporting Markdown and HTML
 - Supporting dark mode
+- Mobile friendly
 
 ## Project Architecture
 
 ```
 .
-├── _data                    
-|   └── publications.yml                      # the YAML file for publications
-├── _includes                    
-|   ├── publications.md                       # the Markdown file for publications
-|   └── services.md                           # the Markdown file for services
-├── _layouts                  
-|   └── homepage.html                         #  the html template for the homepage 
-├── _sass
-|   ├── minimal-light.scss                    #  this file will be compiled into a CSS file to control the style of the page              
-|   └── minimal-light-no-dark-mode.scss       #  this file is similar to minimal-light.scss with the dark mode disabled
-├── assets                                    #  some files
-├── html_source_file                          #  compiled HTML files
-├── .gitignore                                #  this file specifies intentionally untracked files that Git should ignore
-├── CNAME                                     #  the custom domain, will be used by GitHub page sevice
-├── Gemfile                                   #  a RubyGems related file
-├── LICENSE                                   #  the license file
-├── README.md                                 #  the readme file (English)
-├── README_de.md                              #  the readme file (German)
-├── README_zh_Hans.md                         #  the readme file (Simplified Chinese)
-├── README_zh_Hant.md                         #  the readme file (Traditional Chinese)
-├── _config.yml                               #  the Jekyll configuration file, including some options of the page  
-└── index.md                                  #  the content of the index page, using Markdown
+├── _config.yml                  # Jekyll site configuration
+├── index.md                     # Homepage content (About Me, News, etc.)
+├── _data/
+│   └── publications.yml         # Publication data (YAML)
+├── _includes/
+│   ├── publications.md          # Publication list template (Liquid)
+│   └── services.md              # Services section (HTML)
+├── _layouts/
+│   └── homepage.html            # Homepage HTML layout
+├── _sass/
+│   ├── minimal-light.scss       # Stylesheet (with dark mode)
+│   └── minimal-light-no-dark-mode.scss
+├── assets/
+│   ├── css/                     # Additional CSS (publications, fonts)
+│   ├── img/                     # Images (avatar, publication thumbnails)
+│   ├── bib/                     # BibTeX files
+│   ├── files/                   # Uploaded files (CV, etc.)
+│   └── js/                      # Frontend JS (favicon switcher, etc.)
+├── cms/
+│   ├── backend/                 # FastAPI backend
+│   │   ├── main.py              # App entry point
+│   │   ├── api/                 # API routes
+│   │   │   ├── publications.py  #   /api/publications
+│   │   │   ├── news.py          #   /api/news
+│   │   │   ├── profile.py       #   /api/profile
+│   │   │   ├── git_api.py       #   /api/git
+│   │   │   ├── preview.py       #   /api/preview
+│   │   │   └── analytics.py     #   /api/analytics
+│   │   ├── models/              # Pydantic schemas
+│   │   └── services/            # Business logic
+│   │       ├── yaml_handler.py  #   YAML read/write
+│   │       ├── markdown_handler.py  # Markdown section parsing
+│   │       ├── git_handler.py   #   Git operations (GitPython)
+│   │       └── publication_parser.py  # BibTeX/URL import
+│   └── frontend/                # CMS web interface
+│       ├── index.html           # Single-page app
+│       ├── css/app.css          # CMS styles
+│       └── js/                  # CMS JavaScript modules
+│           ├── app.js           #   Core (tabs, API, notifications)
+│           ├── publications.js  #   Publication CRUD + author chips
+│           ├── news.js          #   News CRUD + date picker
+│           ├── profile.js       #   Profile editing + CV upload
+│           ├── analytics.js     #   Traffic chart (Chart.js)
+│           ├── git.js           #   Git status/commit/push
+│           └── preview.js       #   Jekyll preview control
+├── Gemfile                      # Ruby/Jekyll dependencies
+└── README.md
 ```
 
 ## Getting Started
 
-This template can be used in the following two ways: 
-- **Using with the GitHub Pages Service.** GitHub will provide you with a server to generate and host web pages.
-- **Using locally with Jekyll.** You may install Jekyll on your own computer and generate static web pages (i.e., HTML files) with this template. After that, you may upload the HTML files to your server.
+### Prerequisites
 
-The detailed instructions are available below.
+- **Python 3.9+**
+- **Ruby** and **Jekyll** (for local preview; not required if only deploying via GitHub Pages)
+- **Git**
+- **GitHub CLI (`gh`)** — required for the analytics dashboard
 
-
-### Using with the GitHub Pages Service
-
-There are two ways to use this template on GitHub:
-
-#### Fork this repository
-- Fork this repository (or [use this repository as a template](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template)) and change the name to `your-username.github.io`.
-
-- Enable the GitHub pages for that repository following the steps [here](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#creating-your-site).
-
-#### Using this repository as a remote theme
-To use this theme, add the following to your repository's `_config.yml`:
-
-```yaml
-remote_theme: yaoyao-liu/minimal-light
-```
-
-Please note that adding the above line will directly apply all the default settings in this repository to yours.
-
-If you hope to edit any files (e.g., `index.md`), you still need to copy them to your repository.
-
-### Using Locally with Jekyll
-
-First, install [Ruby](https://www.ruby-lang.org/en/) and [Jekyll](https://jekyllrb.com/). The install instructions can be found here: <https://jekyllrb.com/docs/installation/#guides>
-
-Then, clone this repository:
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yaoyao-liu/minimal-light.git
-cd minimal-light
+git clone https://github.com/Nauhcnay/nauhcnay.github.io.git
+cd nauhcnay.github.io
 ```
-Install and run:
+
+### 2. Install Python Dependencies (CMS Backend)
 
 ```bash
+pip install fastapi uvicorn pyyaml gitpython httpx python-multipart bibtexparser requests beautifulsoup4
+```
+
+Or with a single command:
+
+```bash
+pip install fastapi uvicorn pyyaml gitpython httpx python-multipart "bibtexparser>=2.0.0b7" requests beautifulsoup4
+```
+
+### 3. Install GitHub CLI (for Analytics)
+
+The analytics dashboard uses `gh api` to fetch traffic data. Install `gh`:
+
+- **Ubuntu/Debian**: `sudo apt install gh`
+- **macOS**: `brew install gh`
+- **Windows**: `winget install GitHub.cli`
+
+Then authenticate:
+
+```bash
+gh auth login
+```
+
+### 4. Install Jekyll Dependencies (for Local Preview)
+
+```bash
+gem install bundler
 bundle install
-bundle add webrick
-bundle exec jekyll server
 ```
-View the live page using `localhost`:
-<http://localhost:4000>. You can get the HTML files in `_site` folder.
 
-### Using the HTML version
+## Running the CMS
 
-The compiled HTML files are available in the `html_source_file` folder. If you don't like Jekyll, you may directly edit and use the HTML version.
+### Start the CMS Backend
 
-## Customizing
+From the repository root directory, run:
 
-### Configuration variables
+```bash
+python3 -m uvicorn cms.backend.main:app --reload --reload-dir cms --host 0.0.0.0 --port 8000
+```
 
-The Minimal Light theme will respect the following variables, if set in your site's `_config.yml`:
+Then open your browser and go to:
 
-  ```yaml
-# Basic Information 
-title: Your Name
-position: Ph.D. Student
-affiliation: Your Affiliation
-email: yourname (at) example.edu
+```
+http://localhost:8000
+```
 
-# Search Engine Optimization (SEO)
-# The following information is used to improve the website traffic from search engines, e.g., Google.
-keywords: minimal light
-description: The Minimal Light is a simple and elegant jekyll theme for academic personal homepage.
-canonical: https://minimal-light-theme.yliu.me/
+You will see the CMS admin interface with tabs for:
 
-# Links 
-# If you don't need one of them, you may delete the corresponding line.
-google_scholar: https://scholar.google.com/
-cv_link: assets/files/curriculum_vitae.pdf
-github_link: https://github.com/
-linkedin: https://www.linkedin.com/
-twitter: https://twitter.com/
+| Tab | Description |
+|-----|-------------|
+| **Publications** | Add/edit/delete/reorder papers. Import from BibTeX or URL. Toggle author bold. Upload thumbnails. |
+| **News** | Add/edit/delete news items with month/year picker. |
+| **Profile** | Edit name, position, affiliation, social links, About Me, Research Interests, Services. Upload CV. |
+| **Analytics** | View 14-day page views, unique visitors, clones chart. See traffic sources and popular pages. |
+| **Git** | View repo status, diff preview, commit and push changes. |
 
-# Images (e.g., your profile picture and your website's favicon) 
-# "favicon" and "favicon_dark" are used for the light and dark modes, respectively. 
-avatar: ./assets/img/avatar.png
-favicon: ./assets/img/favicon.png
-favicon_dark: ./assets/img/favicon-dark.png
+### Start Jekyll Local Preview
 
-# Footnote
-# You may use the option to disable the footnote, "Powered by Jekyll and Minimal Light theme."
-enable_footnote: true
+You can start Jekyll preview from within the CMS (click the "Preview" button in the top bar), or manually:
 
-# Auto Dark Mode
-# You may use the option to disable the automatic dark theme
-auto_dark_mode: true
+```bash
+bundle exec jekyll serve
+```
 
-# Font
-# You can use this option to choose between Serif or Sans Serif fonts.
-font: "Serif" # or "Sans Serif"
+Then visit `http://localhost:4000` to see your homepage.
 
-# Google Analytics ID
-# Please remove this if you don't use Google Analytics
-google_analytics: UA-111540567-4
-  ```
-### Edit `index.md`
+### Common Workflow
 
-Create `index.md` and add your personal information. It supports **Markdown** and **HTML** syntax.
+1. Start the CMS: `python3 -m uvicorn cms.backend.main:app --reload --reload-dir cms --host 0.0.0.0 --port 8000`
+2. Open `http://localhost:8000` in your browser
+3. Make edits (publications, news, profile, etc.)
+4. Click "Preview" to check your changes locally
+5. Click "Commit & Push" to deploy to GitHub Pages
 
-### Edit included files
+## Deploying to GitHub Pages
 
-There are two markdown files included in `index.md`. They are `_includes/publications.md` and `_includes/service.md`, respectively. These two files also support **Markdown** and **HTML** syntax. If you don't hope to include these two files, you may remove the following lines in `index.md`:
-https://github.com/yaoyao-liu/minimal-light/blob/b38070cd0b6bce45d8a885f3828549af8f82b7cb/index.md?plain=1#L21-L23
-
-If you hope to edit the publication list without changing the format, you may edit `_data/publications.yml`:
-https://github.com/yaoyao-liu/minimal-light/blob/77b1b3b31d4561091bcd739f37a2e1880e8b5ca5/_data/publications.yml#L3-L11
-
-
-### Stylesheet
-
-If you'd like to add your own custom styles, you may edit `_sass/minimal-light.scss`.
-
-### Layouts
-
-If you'd like to change the theme's HTML layout, you may edit `_layout/homepage.html`.
+Any push to the `main` branch will automatically trigger a GitHub Pages build and deploy. No additional configuration is needed — just commit and push your changes (either via the CMS or via git CLI).
 
 ## License
 
@@ -178,10 +175,7 @@ This work is licensed under a [Creative Commons Zero v1.0 Universal](https://git
 
 ## Acknowledgements
 
-Our project uses the source code from the following repositories:
-
-* [pages-themes/minimal](https://github.com/pages-themes/minimal)
-
-* [orderedlist/minimal](https://github.com/orderedlist/minimal)
-
-* [al-folio](https://github.com/alshedivat/al-folio)
+- [minimal-light](https://github.com/yaoyao-liu/minimal-light) — the base Jekyll theme
+- [pages-themes/minimal](https://github.com/pages-themes/minimal)
+- [orderedlist/minimal](https://github.com/orderedlist/minimal)
+- [al-folio](https://github.com/alshedivat/al-folio)
