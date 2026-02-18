@@ -138,37 +138,36 @@ class GitHandler:
             message: 提交信息
             deploy: 是否合并到 main 分支并推送（部署）
         """
-        if not self.repo.is_dirty() and not self.repo.untracked_files:
+        has_changes = self.repo.is_dirty() or bool(self.repo.untracked_files)
+
+        if not has_changes and not deploy:
             return {
                 "success": False,
                 "error": "没有需要提交的更改"
             }
 
-        # 生成默认提交信息
-        if not message:
-            status = self.get_status()
-            modified = len(status["modified_files"])
-            untracked = len(status["untracked_files"])
-            message = f"Update content via CMS ({modified} modified, {untracked} new)"
-
         try:
             dev_branch = self.repo.active_branch.name
-
-            # 提交
-            commit_sha = self.commit(message)
-
-            # 推送当前分支
-            push_result = self.push()
-
             result = {
                 "success": True,
-                "commit": commit_sha[:7],
-                "message": message,
-                "push": push_result,
                 "deployed": False,
             }
 
-            # 如果需要部署到 main
+            # 有未提交的更改时，先提交并推送
+            if has_changes:
+                if not message:
+                    status = self.get_status()
+                    modified = len(status["modified_files"])
+                    untracked = len(status["untracked_files"])
+                    message = f"Update content via CMS ({modified} modified, {untracked} new)"
+
+                commit_sha = self.commit(message)
+                push_result = self.push()
+                result["commit"] = commit_sha[:7]
+                result["message"] = message
+                result["push"] = push_result
+
+            # 部署到 main
             if deploy and dev_branch != "main":
                 self.repo.git.checkout("main")
                 try:
@@ -177,7 +176,6 @@ class GitHandler:
                     result["deployed"] = True
                     result["deploy_push"] = main_push
                 finally:
-                    # 无论成功失败都切回开发分支
                     self.repo.git.checkout(dev_branch)
 
             return result
