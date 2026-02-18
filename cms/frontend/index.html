@@ -234,9 +234,26 @@
                     <div class="modal-body">
                         <form id="news-form" class="space-y-4">
                             <div>
-                                <label class="form-label">日期 * <span class="text-sm text-gray-500">(选择月份或输入完整日期)</span></label>
-                                <input type="month" name="date" class="form-input" required>
-                                <p class="text-xs text-gray-500 mt-1">格式示例：2024-10 或手动输入 2024-10-15</p>
+                                <label class="form-label">日期 *</label>
+                                <div class="flex gap-2">
+                                    <select id="news-month" class="form-input" required>
+                                        <option value="">选择月份</option>
+                                        <option value="Jan.">Jan.</option>
+                                        <option value="Feb.">Feb.</option>
+                                        <option value="Mar.">Mar.</option>
+                                        <option value="Apr.">Apr.</option>
+                                        <option value="May.">May.</option>
+                                        <option value="Jun.">Jun.</option>
+                                        <option value="Jul.">Jul.</option>
+                                        <option value="Aug.">Aug.</option>
+                                        <option value="Sep.">Sep.</option>
+                                        <option value="Oct.">Oct.</option>
+                                        <option value="Nov.">Nov.</option>
+                                        <option value="Dec.">Dec.</option>
+                                    </select>
+                                    <input type="number" id="news-year" class="form-input" min="2020" max="2030" placeholder="年份" required>
+                                </div>
+                                <input type="hidden" name="date">
                             </div>
                             <div>
                                 <label class="form-label">内容 * (支持 Markdown)</label>

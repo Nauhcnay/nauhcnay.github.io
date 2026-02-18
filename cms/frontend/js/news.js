@@ -1,5 +1,44 @@
 // 新闻管理模块
 
+// 月份映射
+const MONTH_ABBR_TO_NUM = {
+    'Jan.': '01', 'Feb.': '02', 'Mar.': '03', 'Apr.': '04',
+    'May.': '05', 'Jun.': '06', 'Jul.': '07', 'Aug.': '08',
+    'Sep.': '09', 'Oct.': '10', 'Nov.': '11', 'Dec.': '12'
+};
+const MONTH_NUM_TO_ABBR = {
+    '01': 'Jan.', '02': 'Feb.', '03': 'Mar.', '04': 'Apr.',
+    '05': 'May.', '06': 'Jun.', '07': 'Jul.', '08': 'Aug.',
+    '09': 'Sep.', '10': 'Oct.', '11': 'Nov.', '12': 'Dec.'
+};
+
+// 解析日期字符串为 { month, year }
+// 支持 "Aug. 2024"、"2024-08"、"2024-08-15" 等格式
+function parseDateString(dateStr) {
+    if (!dateStr) return { month: '', year: '' };
+
+    // 格式: "Mon. YYYY"
+    var m1 = dateStr.match(/^(\w+\.?)\s+(\d{4})$/);
+    if (m1 && MONTH_ABBR_TO_NUM[m1[1]]) {
+        return { month: m1[1], year: m1[2] };
+    }
+
+    // 格式: "YYYY-MM" 或 "YYYY-MM-DD"
+    var m2 = dateStr.match(/^(\d{4})-(\d{2})/);
+    if (m2) {
+        var abbr = MONTH_NUM_TO_ABBR[m2[2]] || '';
+        return { month: abbr, year: m2[1] };
+    }
+
+    return { month: '', year: '' };
+}
+
+// 格式化为显示格式 "Mon. YYYY"
+function formatDateDisplay(month, year) {
+    if (!month || !year) return '';
+    return month + ' ' + year;
+}
+
 // 加载新闻列表
 async function loadNews() {
     try {
@@ -118,47 +157,35 @@ function openNewsModal(newsItem = null, index = null) {
     const modal = document.getElementById('news-modal');
     const form = document.getElementById('news-form');
     const title = document.getElementById('news-modal-title');
+    const monthSelect = document.getElementById('news-month');
+    const yearInput = document.getElementById('news-year');
 
     // 重置表单
     form.reset();
+    monthSelect.value = '';
+    yearInput.value = '';
 
     if (newsItem) {
         // 编辑模式
         title.textContent = '编辑新闻';
         document.getElementById('news-edit-index').value = index;
 
-        // 填充表单
-        // 尝试解析日期格式，支持多种格式
-        let dateValue = newsItem.date || '';
+        // 解析日期并填充下拉框
+        var parsed = parseDateString(newsItem.date);
+        monthSelect.value = parsed.month;
+        yearInput.value = parsed.year;
 
-        // 如果是 "Aug. 2024" 这样的格式，转换为 "2024-08"
-        const monthNames = {
-            'Jan.': '01', 'Feb.': '02', 'Mar.': '03', 'Apr.': '04',
-            'May.': '05', 'Jun.': '06', 'Jul.': '07', 'Aug.': '08',
-            'Sep.': '09', 'Oct.': '10', 'Nov.': '11', 'Dec.': '12'
-        };
-
-        const match = dateValue.match(/^(\w+\.?)\s+(\d{4})$/);
-        if (match) {
-            const monthAbbr = match[1];
-            const year = match[2];
-            if (monthNames[monthAbbr]) {
-                dateValue = `${year}-${monthNames[monthAbbr]}`;
-            }
-        }
-
-        form.date.value = dateValue;
         form.content.value = newsItem.content || '';
     } else {
         // 添加模式
         title.textContent = '添加新闻';
         document.getElementById('news-edit-index').value = '';
 
-        // 自动填充当前日期（YYYY-MM 格式）
+        // 自动填充当前月份和年份
         const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        form.date.value = `${year}-${month}`;
+        const monthNum = String(now.getMonth() + 1).padStart(2, '0');
+        monthSelect.value = MONTH_NUM_TO_ABBR[monthNum] || '';
+        yearInput.value = now.getFullYear();
     }
 
     modal.classList.add('active');
@@ -174,16 +201,28 @@ function closeNewsModal() {
 async function saveNews() {
     const form = document.getElementById('news-form');
     const index = document.getElementById('news-edit-index').value;
+    const monthSelect = document.getElementById('news-month');
+    const yearInput = document.getElementById('news-year');
 
-    // 验证表单
-    if (!form.checkValidity()) {
-        form.reportValidity();
+    // 验证
+    if (!monthSelect.value) {
+        showNotification('请选择月份', 'error');
+        return;
+    }
+    if (!yearInput.value) {
+        showNotification('请输入年份', 'error');
+        return;
+    }
+    if (!form.content.value.trim()) {
+        showNotification('请输入新闻内容', 'error');
         return;
     }
 
-    // 收集数据
+    // 格式化日期为 "Mon. YYYY"
+    const dateStr = formatDateDisplay(monthSelect.value, yearInput.value);
+
     const data = {
-        date: form.date.value,
+        date: dateStr,
         content: form.content.value,
     };
 
