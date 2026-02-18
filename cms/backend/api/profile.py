@@ -25,6 +25,31 @@ class ContentUpdate(BaseModel):
     content: str
 
 
+SERVICES_FILE = REPO_ROOT / "_includes" / "services.md"
+
+
+def read_services() -> str:
+    """读取 services.md，返回 ## Services 标题之后的内容"""
+    if not SERVICES_FILE.exists():
+        return ""
+    content = SERVICES_FILE.read_text(encoding="utf-8")
+    # 去掉开头的 ## Services 标题行
+    lines = content.split("\n")
+    for i, line in enumerate(lines):
+        if line.strip().startswith("## "):
+            return "\n".join(lines[i + 1:]).strip()
+    return content.strip()
+
+
+def write_services(body: str) -> None:
+    """写入 services.md，保留 ## Services 标题"""
+    markdown_handler._create_backup(SERVICES_FILE)
+    SERVICES_FILE.write_text(
+        "## Services\n\n" + body.strip() + "\n",
+        encoding="utf-8",
+    )
+
+
 @router.get("/")
 async def get_profile():
     """获取个人信息"""
@@ -38,7 +63,8 @@ async def get_profile():
         return {
             "config": config,
             "about": about,
-            "research_interests": research_section
+            "research_interests": research_section,
+            "services": read_services(),
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -69,6 +95,16 @@ async def update_research_interests(content: str = Body(..., embed=True)):
     """更新研究兴趣"""
     try:
         markdown_handler.update_section("Research Interests", content)
+        return {"success": True}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.put("/services")
+async def update_services(content: str = Body(..., embed=True)):
+    """更新 Services 内容"""
+    try:
+        write_services(content)
         return {"success": True}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

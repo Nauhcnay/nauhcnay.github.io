@@ -38,6 +38,10 @@ function renderProfile() {
     // About Me 和 Research Interests
     document.getElementById('profile-about').value = about;
     document.getElementById('profile-research').value = research;
+
+    // Services
+    const services = AppState.profile.services || '';
+    document.getElementById('profile-services').value = services;
 }
 
 // 保存个人信息
@@ -90,6 +94,18 @@ async function saveProfile() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({content: research}),
+            });
+        }
+
+        // 更新 Services
+        const services = document.getElementById('profile-services').value;
+        if (services) {
+            await apiRequest('/profile/services', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({content: services}),
             });
         }
 
