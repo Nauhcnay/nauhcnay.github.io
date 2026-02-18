@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 
-from .api import publications_router, news_router, profile_router, git_router
+from .api import publications_router, news_router, profile_router, git_router, preview_router
 
 # 创建 FastAPI 应用
 app = FastAPI(
@@ -26,6 +26,7 @@ app.include_router(publications_router)
 app.include_router(news_router)
 app.include_router(profile_router)
 app.include_router(git_router)
+app.include_router(preview_router)
 
 # 挂载 assets 目录（论文图片、PDF 等静态资源）
 REPO_ROOT = Path(__file__).parent.parent.parent

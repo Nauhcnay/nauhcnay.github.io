@@ -13,6 +13,9 @@
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SortableJS for drag-and-drop reordering -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
 </head>
 <body class="bg-gray-50">
     <!-- 顶部导航栏 -->
@@ -29,6 +32,15 @@
                     <div id="git-status" class="text-sm text-gray-600">
                         <i class="fas fa-code-branch mr-1"></i>
                         <span id="branch-name">-</span>
+                    </div>
+                    <!-- 预览按钮 -->
+                    <div class="flex items-center space-x-1">
+                        <button id="preview-btn" class="btn-secondary" title="启动 Jekyll 本地预览">
+                            <i class="fas fa-eye mr-2"></i>预览
+                        </button>
+                        <button id="preview-stop-btn" class="btn-danger" title="停止预览" style="display:none;">
+                            <i class="fas fa-stop"></i>
+                        </button>
                     </div>
                     <!-- 同步按钮 -->
                     <button id="sync-btn" class="btn-primary">
@@ -159,9 +171,19 @@
                                     <div id="image-preview" class="mt-2"></div>
                                 </div>
                                 <div class="col-span-2">
-                                    <label class="form-label">BibTeX 文件</label>
-                                    <input type="file" id="bibtex-upload" accept=".bib" class="form-input">
+                                    <label class="form-label">BibTeX</label>
+                                    <div class="bibtex-mode-tabs">
+                                        <button type="button" class="bibtex-tab active" data-bibtex-mode="paste">粘贴文本</button>
+                                        <button type="button" class="bibtex-tab" data-bibtex-mode="upload">上传文件</button>
+                                    </div>
+                                    <div id="bibtex-paste-area">
+                                        <textarea id="bibtex-text" class="form-input" rows="4" placeholder="@inproceedings{key, title={...}, ...}"></textarea>
+                                    </div>
+                                    <div id="bibtex-upload-area" style="display:none;">
+                                        <input type="file" id="bibtex-upload" accept=".bib" class="form-input">
+                                    </div>
                                     <input type="hidden" name="bibtex">
+                                    <p id="bibtex-status" class="text-xs text-green-600 mt-1" style="display:none;"></p>
                                 </div>
                                 <div class="col-span-2">
                                     <label class="flex items-center">
@@ -353,5 +375,6 @@
     <script src="./js/news.js"></script>
     <script src="./js/profile.js"></script>
     <script src="./js/git.js"></script>
+    <script src="./js/preview.js"></script>
 </body>
 </html>

@@ -1,10 +1,11 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from typing import List, Dict, Any
 from pathlib import Path
+import re
 import shutil
 from datetime import datetime
 
-from ..models.schemas import Publication, ImportRequest
+from ..models.schemas import Publication, ImportRequest, BibtexTextRequest
 from ..services.yaml_handler import YAMLHandler
 from ..services.publication_parser import parse_bibtex, parse_paper_url, parse_scholar_url
 
@@ -137,6 +138,32 @@ async def upload_bibtex(file: UploadFile = File(...)):
             "success": True,
             "path": relative_path,
             "filename": file.filename
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.post("/save-bibtex-text")
+async def save_bibtex_text(req: BibtexTextRequest):
+    """将粘贴的 BibTeX 文本保存为 .bib 文件"""
+    try:
+        upload_dir = REPO_ROOT / "assets" / "bib"
+        upload_dir.mkdir(parents=True, exist_ok=True)
+
+        if req.filename:
+            safe_name = re.sub(r'[^\w\-]', '_', req.filename)
+        else:
+            safe_name = f"bibtex_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        filename = f"{safe_name}.bib"
+
+        file_path = upload_dir / filename
+        file_path.write_text(req.content, encoding="utf-8")
+
+        relative_path = f"./assets/bib/{filename}"
+        return {
+            "success": True,
+            "path": relative_path,
+            "filename": filename,
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

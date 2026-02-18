@@ -1,29 +1,14 @@
 main:
-- title: Generating Past and Future in Digital Painting Processes
-  authors: Lvmin Zhang, <strong>Chuan Yan*</strong>, Yuwei Guo, Jinbo Xing, Maneesh
-    Agrawala
-  conference_short: SIGGAPH 2025
-  conference: ACM Transactions on Graphics
-  pdf: https://doi.org/10.1145/3731160
-  code: https://github.com/lllyasviel/Paints-UNDO
-  page: https://lllyasviel.github.io/paints_alter_web/
-  bibtex: ./assets/bib/Instance_Segmentation_of_Scene_Sketches_Using_Natu.bib
-  image: ./assets/img/publication_20260217_165006.jpg
-  featured: true
-  order: 0
-- title: Instance Segmentation of Scene Sketches Using Natural Image Priors
-  authors: Mia Tang, Yael Vinker, <strong>Chuan Yan*</strong>, Lvmin Zhang, Maneesh
-    Agrawala
-  conference_short: SIGGRAPH 2025
-  conference: Proceedings of the Special Interest Group on Computer Graphics and Interactive
-    Techniques Conference Conference Papers
-  pdf: https://doi.org/10.1145/3721238.3730606
-  code: https://github.com/miatang13/InkLayer
-  page: https://inklayer.github.io/
-  bibtex: ./assets/bib/Instance_Segmentation_of_Scene_Sketches_Using_Natu.bib
-  image: ./assets/img/publication_20260217_160952.png
-  featured: true
-  order: 0
+- title: 'ShadowMagic: Designing Human-AI Collaborative Support for Comic Professionals''
+    Shadowing'
+  authors: Amrita Ganguly*, <strong>Chuan Yan</strong>, John Joon Young Chung, Tong
+    Steven Sun, Yoon Kiheon, Yotam Gingold, Sungsoo Ray Hong (*Corresponding author)
+  conference_short: UIST 2024
+  conference: The ACM Symposium on User Interface Software and Technology 2024
+  pdf: ''
+  code: ''
+  bibtex: ''
+  image: ./assets/img/teaser_shadowmaigc2024.jpg
 - title: Deep Sketch Vectorization via Implicit Surface Extraction
   authors: <strong>Chuan Yan*</strong>, Yong Li, Deepali Aneja, Matthew Fisher, Edgar
     Simo-Serra, Yotam Gingold (*Corresponding author)
@@ -33,15 +18,6 @@ main:
   code: https://github.com/Nauhcnay/Deep-Sketch-Vectorization
   bibtex: ./assets/bib/DeepSketchVectorization2024.bib
   image: ./assets/img/teaser_sketchVG2024.jpg
-  featured: true
-  order: 0
-- title: 'ShadowMagic: Designing Human-AI Collaborative Support for Comic Professionals''
-    Shadowing'
-  authors: Amrita Ganguly*, <strong>Chuan Yan</strong>, John Joon Young Chung, Tong
-    Steven Sun, Yoon Kiheon, Yotam Gingold, Sungsoo Ray Hong (*Corresponding author)
-  conference_short: UIST 2024
-  conference: The ACM Symposium on User Interface Software and Technology 2024
-  image: ./assets/img/teaser_shadowmaigc2024.jpg
   featured: true
   order: 0
 - title: 'FlatMagic: Improving Flat Colorization through AI-driven Design for Digital
@@ -65,5 +41,16 @@ main:
   code: https://github.com/Nauhcnay/A-Benchmark-for-Rough-Sketch-Cleanup
   bibtex: ./assets/bib/Benchmark2020.bib
   image: ./assets/img/teaser_benchmark2020.jpg
+  featured: true
+  order: 0
+- title: Instance Segmentation of Scene Sketches Using Natural Image Priors
+  authors: Mia Tang, Yael Vinker, Chuan Yan, Lvmin Zhang, Maneesh Agrawala
+  conference_short: PSIGCGITCCP 2025
+  conference: Proceedings of the Special Interest Group on Computer Graphics and Interactive
+    Techniques Conference Conference Papers
+  pdf: https://doi.org/10.1145/3721238.3730606
+  code: https://github.com/miatang13/InkLayer
+  page: https://inklayer.github.io/
+  image: ./assets/img/publication_20260217_160952.png
   featured: true
   order: 0

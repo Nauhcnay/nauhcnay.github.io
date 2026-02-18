@@ -104,3 +104,9 @@ class ImportRequest(BaseModel):
     """论文导入请求模型"""
     method: str = Field(..., description="导入方式: bibtex / url / scholar")
     input: str = Field(..., description="BibTeX 字符串或 URL")
+
+
+class BibtexTextRequest(BaseModel):
+    """BibTeX 文本保存请求"""
+    content: str = Field(..., description="BibTeX 文本内容")
+    filename: Optional[str] = Field(None, description="自定义文件名（不含扩展名）")

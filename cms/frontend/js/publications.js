@@ -27,7 +27,7 @@ function renderPublications() {
     }
 
     container.innerHTML = AppState.publications.map((pub, index) => `
-        <div class="publication-card">
+        <div class="publication-card" data-index="${index}">
             ${pub.image ? `<img src="${pub.image}" alt="${pub.title}">` : '<div class="w-32 h-32 bg-gray-200 rounded flex items-center justify-center"><i class="fas fa-image text-gray-400 text-2xl"></i></div>'}
             <div class="flex-1">
                 <h3 class="text-lg font-semibold text-gray-900 mb-1">${escapeHtml(pub.title)}</h3>
@@ -43,6 +43,9 @@ function renderPublications() {
                 ${pub.notes ? `<span class="badge badge-green">${escapeHtml(pub.notes)}</span>` : ''}
             </div>
             <div class="flex flex-col gap-2">
+                <button class="drag-handle" title="拖拽排序" style="cursor: grab;">
+                    <i class="fas fa-grip-vertical"></i>
+                </button>
                 <button onclick="editPublication(${index})" class="btn-success">
                     <i class="fas fa-edit"></i>
                 </button>
@@ -52,6 +55,38 @@ function renderPublications() {
             </div>
         </div>
     `).join('');
+
+    initSortable();
+}
+
+// 初始化拖拽排序
+function initSortable() {
+    const el = document.getElementById('publications-list');
+    if (!el || el.children.length === 0) return;
+    Sortable.create(el, {
+        handle: '.drag-handle',
+        animation: 150,
+        ghostClass: 'dragging',
+        dragClass: 'drag-over',
+        onEnd: async function (evt) {
+            const items = el.children;
+            const newIndices = Array.from(items).map(item =>
+                parseInt(item.dataset.index)
+            );
+            try {
+                const result = await apiRequest('/publications/reorder', {
+                    method: 'POST',
+                    body: JSON.stringify(newIndices),
+                });
+                AppState.publications = result;
+                renderPublications();
+                showNotification('排序已保存', 'success');
+            } catch (error) {
+                await loadPublications();
+                showNotification('排序保存失败: ' + error.message, 'error');
+            }
+        },
+    });
 }
 
 // 打开添加论文模态框
@@ -224,6 +259,13 @@ function openPublicationModal(publication = null, index = null) {
     // 重置表单
     form.reset();
     document.getElementById('image-preview').innerHTML = '';
+    document.getElementById('bibtex-text').value = '';
+    document.getElementById('bibtex-status').style.display = 'none';
+    // 重置 BibTeX 模式到"粘贴"
+    document.querySelectorAll('.bibtex-tab').forEach(t => t.classList.remove('active'));
+    document.querySelector('.bibtex-tab[data-bibtex-mode="paste"]').classList.add('active');
+    document.getElementById('bibtex-paste-area').style.display = '';
+    document.getElementById('bibtex-upload-area').style.display = 'none';
     resetImportStep();
 
     if (publication) {
@@ -277,6 +319,26 @@ async function savePublication() {
     if (!form.checkValidity()) {
         form.reportValidity();
         return;
+    }
+
+    // 如果有粘贴的 BibTeX 文本且尚未保存为文件，先保存
+    const bibtexText = document.getElementById('bibtex-text').value.trim();
+    if (bibtexText && !form.bibtex.value) {
+        try {
+            const slugName = form.title.value
+                ? form.title.value.replace(/[^\w]+/g, '_').substring(0, 50)
+                : null;
+            const result = await apiRequest('/publications/save-bibtex-text', {
+                method: 'POST',
+                body: JSON.stringify({ content: bibtexText, filename: slugName }),
+            });
+            if (result.success) {
+                form.bibtex.value = result.path;
+            }
+        } catch (error) {
+            showNotification('BibTeX 保存失败: ' + error.message, 'error');
+            return;
+        }
     }
 
     // 收集数据
@@ -361,7 +423,19 @@ document.getElementById('image-upload')?.addEventListener('change', async (e) =>
     }
 });
 
-// 上传 BibTeX
+// ── BibTeX 粘贴/上传模式切换 ──────────────────────────────────
+
+document.querySelectorAll('.bibtex-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const mode = tab.dataset.bibtexMode;
+        document.querySelectorAll('.bibtex-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('bibtex-paste-area').style.display = mode === 'paste' ? '' : 'none';
+        document.getElementById('bibtex-upload-area').style.display = mode === 'upload' ? '' : 'none';
+    });
+});
+
+// 上传 BibTeX 文件
 document.getElementById('bibtex-upload')?.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -369,6 +443,10 @@ document.getElementById('bibtex-upload')?.addEventListener('change', async (e) =
     try {
         const result = await uploadFile(file, '/publications/upload-bibtex');
         document.querySelector('input[name="bibtex"]').value = result.path;
+        document.getElementById('bibtex-text').value = '';
+        const status = document.getElementById('bibtex-status');
+        status.textContent = `已上传: ${result.filename}`;
+        status.style.display = '';
         showNotification('BibTeX 上传成功', 'success');
     } catch (error) {
         showNotification('BibTeX 上传失败: ' + error.message, 'error');

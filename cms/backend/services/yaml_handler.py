@@ -65,7 +65,7 @@ class YAMLHandler:
     def add_publication(self, publication: Dict[str, Any]) -> List[Dict[str, Any]]:
         """添加新论文"""
         publications = self.read_publications()
-        publications.append(publication)
+        publications.insert(0, publication)
         self.write_publications(publications)
         return publications
 
