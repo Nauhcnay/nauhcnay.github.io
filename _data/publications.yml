@@ -1,4 +1,14 @@
 main:
+- title: 'Emotion-Qwen: A Unified Framework for Emotion and Vision Understanding'
+  authors: Dawei Huang, Qing Li, <strong>Chuan Yan</strong>, Zebang Cheng, Zihao Han,
+    Yurong Huang, Xiang Li, Bin Li, Xiaohui Wang, Zheng Lian, Zhi-Qi Cheng, Xiaojiang
+    Peng
+  conference_short: arXiv 2025
+  conference: arXiv preprint
+  pdf: https://arxiv.org/abs/2505.06685
+  image: ./assets/img/publication_20260218_230819.png
+  featured: false
+  order: 0
 - title: Self-ensembling for 3D point cloud domain adaptation
   authors: Qing Li*, Xiaojiang Peng, <strong>Chuan Yan</strong>, Pan Gao, Qi Hao
   conference_short: IVC 2025
@@ -38,6 +48,14 @@ main:
   pdf: https://doi.org/https://doi.org/10.1016/j.patcog.2024.110690
   bibtex: ./assets/bib/Graph_Attentive_Dual_Ensemble_learning_for_Unsuper.bib
   image: ./assets/img/publication_20260217_214519.png
+  featured: false
+  order: 0
+- title: 'From Large Language Models to Large Multimodal Models: A Literature Review'
+  authors: Dawei Huang, <strong>Chuan Yan</strong>, Qing Li, Xiaojiang Peng
+  conference_short: AS 2024
+  conference: Applied Sciences
+  pdf: https://doi.org/10.3390/app14125068
+  image: ./assets/img/publication_20260218_231208.png
   featured: false
   order: 0
 - title: Mixed-Integer Programming for Adaptive VR Workflow Training
